@@ -1,0 +1,36 @@
+{
+  "name": "piilani",
+  "version": "1.0.0",
+  "description": "Just another Web application framework.",
+  "main": "dist/index.js",
+  "bin": {
+    "piilani": "bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/app-root-path": "^1.2.4",
+    "@types/express": "^4.17.2",
+    "@types/lodash": "^4.14.149",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.12.14",
+    "apidoc": "^0.19.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.1",
+    "npm-run-all": "^4.1.5",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "case": "^1.6.2",
+    "commander": "^4.0.1",
+    "dotenv": "^8.2.0",
+    "lodash": "^4.17.15",
+    "prompts": "^2.3.0"
+  }
+}

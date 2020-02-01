@@ -1,0 +1,46 @@
+import express from 'express';
+import GatewayFactory from '../../context/GatewayFactory';
+import LoggerFactory from '../../context/LoggerFactory';
+import <MODEL> from '../../models/<MODEL>';
+import <SERVICE> from './<SERVICE>';
+
+const gateway = GatewayFactory.get<GATEWAY>Gateway();
+const service = new <SERVICE>(gateway, LoggerFactory.getLogger());
+const router = express.Router();
+
+/**
+ * @api {delete} /<ENDPOINT>/{id} Delete a <MODEL>
+ * @apiGroup <MODEL>s
+ * @apiName Delete<MODEL>
+ */
+router.delete('/:id', service.delete);
+
+/**
+ * @api {get} /<ENDPOINT> Get all <MODEL>s.
+ * @apiGroup <MODEL>s
+ * @apiName GetAll<MODEL>s
+ */
+router.get('/', (req, res) => service.find);
+
+/**
+ * @api {get} /<ENDPOINT>/{id} Get <MODEL> by ID.
+ * @apiGroup <MODEL>s
+ * @apiName Get<MODEL>ById
+ */
+router.get('/:id', service.find);
+
+/**
+ * @api {post} /<ENDPOINT> Create new <MODEL>.
+ * @apiGroup <MODEL>s
+ * @apiName Create<MODEL>
+ */
+router.post('/', service.create);
+
+/**
+ * @api {put} /<ENDPOINT>/{id} Update a <MODEL>.
+ * @apiGroup <MODEL>s
+ * @apiName Update<MODEL>
+ */
+router.post('/:id', service.create);
+
+export default router;
