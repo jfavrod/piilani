@@ -11,4 +11,21 @@ export default abstract class ServiceBase {
             this.logger = console as any as ILogger;
         }
     }
+
+    /**
+     * Get a default IServiceResponse object.
+     * @returns {IServiceResponse}
+     * {
+     *   "code": 500,
+     *   "error": true,
+     *   "message": "Default service response",
+     * }
+     */
+    protected getDefaultServiceResponse = (): IServiceResponse => {
+        return {
+            code: 500,
+            error: true,
+            message: 'Default service response',
+        };
+    }
 }
