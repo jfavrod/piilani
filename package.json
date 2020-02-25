@@ -18,6 +18,7 @@
     "@types/lodash": "^4.14.149",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.14",
+    "@types/pg": "^7.14.1",
     "apidoc": "^0.19.0",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.1",
