@@ -2,12 +2,25 @@ import { DBDriver, Env } from './enums';
 import { IConfig, IConfigValues, IDatabaseVals, IMultiDatabaseVals } from './interfaces';
 
 export default class Config implements IConfig {
+    private configDir: string;
     private configValues: IConfigValues;
     private env: Env;
 
-    constructor(configValues: IConfigValues, env: Env) {
+    /**
+     * @param configValues Values used to configure this application.
+     * Should be a JSON file in the configDir.
+     * @param env The Env this application is running in.
+     * @param configDir The absolute path to the config directory - the
+     * directory where the config is stored.
+     */
+    constructor(configValues: IConfigValues, env: Env, configDir: string) {
+        this.configDir = configDir;
         this.configValues = configValues;
         this.env = env;
+    }
+
+    public getConfigDir = (): string => {
+        return this.configDir;
     }
 
     public getConnectionString = (db?: string) => {
@@ -29,6 +42,10 @@ export default class Config implements IConfig {
 
             return (this.configValues.database as IDatabaseVals).toString();
         }
+    }
+
+    public getDatabaseConfig = () => {
+        return this.configValues.database;
     }
 
     public getEnv = () => {
