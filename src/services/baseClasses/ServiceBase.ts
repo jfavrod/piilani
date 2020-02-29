@@ -1,4 +1,5 @@
 import { ILogger } from '../../context/interfaces';
+import { IServiceResponse } from '../interfaces'
 
 export default abstract class ServiceBase {
     protected logger: ILogger;
