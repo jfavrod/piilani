@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Gateways
+ */
+
 export interface IGatewayResponse {
     /**
      * Response classes:

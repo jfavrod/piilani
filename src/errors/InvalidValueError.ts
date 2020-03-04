@@ -1,4 +1,9 @@
 /**
+ * @packageDocumentation
+ * @module Errors
+ */
+
+/**
  * Used when an actual value does not match expected expectations
  * (falling out of bounds, wrong type, etc.).
  */

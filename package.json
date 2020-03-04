@@ -1,6 +1,6 @@
 {
   "name": "piilani",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Just another Web application framework.",
   "main": "dist/index.js",
   "bin": {
@@ -24,6 +24,8 @@
     "nodemon": "^2.0.1",
     "npm-run-all": "^4.1.5",
     "tslint": "^5.20.1",
+    "typedoc": "^0.16.11",
+    "typedoc-plugin-external-module-name": "^3.0.0",
     "typescript": "^3.7.3"
   },
   "dependencies": {

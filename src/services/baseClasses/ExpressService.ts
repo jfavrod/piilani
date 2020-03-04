@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Services
+ */
+
 import { Response } from 'express';
 import { ILogger } from '../../context/interfaces';
 import { IServiceResponse } from '../interfaces';

@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Gateways
+ */
+
 import { ILogger } from '../../context/interfaces';
 import { IGatewayResponse } from '../interfaces';
 

@@ -1,11 +1,26 @@
+/**
+ * @packageDocumentation
+ * @module Context.Factories.BaseClasses
+ */
+
 import fs from 'fs';
 import { Pool } from 'pg';
-import { IConfig, IDatabaseVals } from '../../interfaces';
+import { IDatabaseVals } from '../../interfaces';
 import FactoryBase from './FactoryBase';
 
+/**
+ * Base class for building new PostgresqlGateways.
+ *
+ * @example ```typescript
+ * import PostgresqlGatewayFactory from './context/factories/baseClasses/PostgresqlGatewayFactoryBase';
+ *
+ * export default class MyPostgresqlGatewayFactory extends PostgresqlGatewayFactory {
+ *     ...
+ * }
+ */
 export default class PostgresqlGatewayFactoryBase extends FactoryBase {
-    protected getPool = (config: IConfig): Pool => {
-        let dbConfig = config.getDatabaseConfig();
+    protected getPool = (): Pool => {
+        let dbConfig = this.config.getDatabaseConfig();
         let caFile: string | undefined;
 
         if (!(dbConfig instanceof Array)) {
@@ -17,14 +32,14 @@ export default class PostgresqlGatewayFactoryBase extends FactoryBase {
 
         if (caFile) {
             return new Pool({
-                connectionString: config.getConnectionString(),
+                connectionString: this.config.getConnectionString(),
                 ssl: {
-                    ca: fs.readFileSync(`${config.getConfigDir()}/${caFile}`),
+                    ca: fs.readFileSync(`${this.config.getConfigDir()}/${caFile}`),
                     rejectUnauthorized: false,
                 },
             });
         }
 
-        return new Pool({ connectionString: config.getConnectionString() });
+        return new Pool({ connectionString: this.config.getConnectionString() });
     }
 }

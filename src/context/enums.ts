@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Context
+ */
+
 export enum DBDriver {
     pg = 'pg',
 }

@@ -1,12 +1,29 @@
-import { IConfig, ILogger } from '../../interfaces';
+/**
+ * @packageDocumentation
+ * @module Context.Factories.BaseClasses
+ */
+
+import Config from '../../Config';
+import { ILogger } from '../../interfaces';
 import ConfigFactory from '../ConfigFactory';
 import LoggerFactory from '../LoggerFactory';
 
+/**
+ * A base class for creating new factories.
+ *
+ * @example ```typescript
+ * import FactoryBase from './context/factories/baseClasses/FactoryBase';
+ *
+ * export default MyNewFactory extends FactoryBase {
+ *     ...
+ * }
+ * ```
+ */
 export default abstract class FactoryBase {
-    protected cachedConfig: IConfig | undefined;
+    protected cachedConfig: Config | undefined;
     protected cachedLogger: ILogger | undefined;
 
-    protected get config(): IConfig {
+    protected get config(): Config {
         if (!this.cachedConfig) {
             this.cachedConfig = ConfigFactory.getInstance();
         }

@@ -1,5 +1,10 @@
+/**
+ * @packageDocumentation
+ * @module Services
+ */
+
 import { ILogger } from '../../context/interfaces';
-import { IServiceResponse } from '../interfaces'
+import { IServiceResponse } from '../interfaces';
 
 export default abstract class ServiceBase {
     protected logger: ILogger;

@@ -1,20 +1,9 @@
-import { DBDriver, Env } from './enums';
+/**
+ * @packageDocumentation
+ * @module Context
+ */
 
-export interface IConfig {
-    /** Get absolute path to the config directory. */
-    getConfigDir(): string;
-    /**
-     * Get a database connection string.
-     * @param db If multiple databases configured, use db to select.
-     */
-    getConnectionString(db?: string): string;
-    getDatabaseConfig(): IDatabaseVals | IMultiDatabaseVals | undefined;
-    getEnv(): Env;
-    getListenPort(): number | undefined;
-    getServiceConfig(serviceName: string): {[key: string]: any} | undefined;
-    getServiceUrl(service: string): string | undefined;
-    toString(): string;
-}
+import { DBDriver } from './enums';
 
 export interface IConfigValues {
     /** Supported Drivers: postgres (pg/node-postgres) */

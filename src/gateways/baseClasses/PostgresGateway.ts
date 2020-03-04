@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Gateways
+ */
+
 import { Pool } from 'pg';
 import { ILogger } from '../../context/interfaces';
 import GatewayBase from './GatewayBase';

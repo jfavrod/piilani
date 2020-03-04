@@ -1,5 +1,12 @@
-import { DBDriver, Env } from './enums';
-import { IConfig, IConfigValues, IDatabaseVals, IMultiDatabaseVals } from './interfaces';
+/**
+ * @packageDocumentation
+ * @module Context
+ */
+
+import { DBDriver, Env } from '../enums';
+import { IConfigValues, IDatabaseVals, IMultiDatabaseVals } from '../interfaces';
+
+import { IConfig } from './interfaces';
 
 export default class Config implements IConfig {
     private configDir: string;

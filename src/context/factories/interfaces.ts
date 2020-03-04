@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Context.Factories
+ */
+
 import { ITableDataGateway } from '../../gateways/interfaces';
 import { IIAMService } from '../../services/interfaces';
 

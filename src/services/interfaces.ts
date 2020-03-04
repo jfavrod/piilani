@@ -1,3 +1,8 @@
+/**
+ * @packageDocumentation
+ * @module Services
+ */
+
 /** An Identity and Access Management (IAM) service interface */
 export interface IIAMService {
     /**

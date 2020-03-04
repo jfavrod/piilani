@@ -1,21 +1,37 @@
+/**
+ * @packageDocumentation
+ * @module Context.Factories
+ */
+
 import appRoot from 'app-root-path';
 import { readFileSync } from 'fs';
 
-import { IConfig, IConfigValues } from '../interfaces';
+import { IConfigValues } from '../../interfaces';
 
-import ConfigError from '../../errors/ConfigError';
-import Config from '../Config';
-import { Env } from '../enums';
+import ConfigError from '../../../errors/ConfigError';
+import Config from '../../Config';
+import { Env } from '../../enums';
 
+/**
+ * Constructs an `Config` object based on the application's
+ * configuration and current environment.
+ *
+ * @example ```typescript
+ * import ConfigFactory from './context/factories/ConfigFactory';
+ *
+ * const config = ConfigFactory.getInstance();
+ * config.getDatabaseConfig();
+ * ```
+ */
 export default class ConfigFactory {
-    private static config: IConfig;
+    private static config: Config;
     private static configDir: string;
     private static defaultConfigFile: string;
     private static devConfigFile: string;
     private static nonProdConfigFile: string;
     private static prodConfigFile: string;
 
-    public static getInstance = (): IConfig => {
+    public static getInstance = (): Config => {
         let defaultConfigValues: Partial<IConfigValues>;
 
         if (ConfigFactory.config) {
