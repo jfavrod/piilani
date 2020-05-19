@@ -3,6 +3,10 @@
  * @module Gateways
  */
 
+ /**
+  * Common interfaces for Gateways classes (Gateways).
+  */
+
 export interface IGatewayResponse {
     /**
      * Response classes:
@@ -18,8 +22,8 @@ export interface IGatewayResponse {
 export interface ITableDataGateway {
     /** The name of the table. */
     table: string;
-    delete(id: any): Promise<IGatewayResponse>;
-    find(id?: any): Promise<IGatewayResponse>;
+    delete(query: any): Promise<IGatewayResponse>;
+    find(query?: any): Promise<IGatewayResponse>;
     insert(record: any): Promise<IGatewayResponse>;
     update(id: any, record?: any): Promise<IGatewayResponse>;
 }
