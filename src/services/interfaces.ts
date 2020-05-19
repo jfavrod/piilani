@@ -3,6 +3,10 @@
  * @module Services
  */
 
+ /**
+  * Common interfaces for Services classes (Services).
+  */
+
 /** An Identity and Access Management (IAM) service interface */
 export interface IIAMService {
     /**
