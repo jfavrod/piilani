@@ -3,12 +3,15 @@
  * @module Context
  */
 
-import { DBDriver } from './enums';
+import { LoggerOptions } from 'winston';
+import { DBDriver, LogDriver } from './enums';
 
 export interface IConfigValues {
+    [index: string]: any;
     /** Supported Drivers: postgres (pg/node-postgres) */
     database?: IDatabaseVals | IMultiDatabaseVals;
     listenPort?: number;
+    logging: ILoggingConfig;
     services?: { [key: string]: IService };
 }
 
@@ -26,7 +29,7 @@ export interface IDatabaseVals {
     host: string;
     name: string;
     password: string;
-    port?: number;
+    port: number;
     ssl?: IDatabaseSSL;
     user: string;
 }
@@ -35,11 +38,27 @@ export interface ILogger {
     log(level: string, mesg?: string): void;
 }
 
+export interface ILoggingConfig extends LoggerOptions {
+    [index: string]: any;
+    driver: LogDriver;
+    http?: {
+        host: string;
+        port: number;
+    };
+    level: string;
+}
+
 export interface IMultiDatabaseVals {
     [key: string]: IDatabaseVals;
 }
 
 export interface IService {
-    name: string;
-    url: string;
+    [index: string]: any;
+    cert?: string;
+    clientId?: string;
+    clientSecret?: string;
+    url?: string;
+    urls?: {
+        [index: string]: string;
+    };
 }
