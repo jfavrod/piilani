@@ -27,7 +27,7 @@ export default abstract class ServiceBase {
      *   "message": "Default service response",
      * }
      */
-    protected getDefaultServiceResponse = (): IServiceResponse => {
+    protected getDefaultServiceResponse(): IServiceResponse {
         return {
             code: 500,
             error: true,
