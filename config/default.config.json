@@ -1,0 +1,14 @@
+{
+    "database": {
+        "driver": "pg",
+        "host": "localhost",
+        "name": "",
+        "password": "",
+        "port": 5432,
+        "user": ""
+    },
+    "logging": {
+        "driver": "winston",
+        "level": "info"
+    }
+}
