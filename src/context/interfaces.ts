@@ -10,6 +10,7 @@ export interface IConfigValues {
     [index: string]: any;
     /** Supported Drivers: postgres (pg/node-postgres) */
     database?: IDatabaseVals | IMultiDatabaseVals;
+    firestore?: IFirebaseSettings;
     listenPort?: number;
     logging: ILoggingConfig;
     services?: { [key: string]: IService };
@@ -32,6 +33,14 @@ export interface IDatabaseVals {
     port: number;
     ssl?: IDatabaseSSL;
     user: string;
+}
+
+export interface IFirebaseSettings extends FirebaseFirestore.Settings {
+    /**
+     * Path (relative to the config directory) where the GCP Service
+     * Role key file is stored.
+     */
+    keyFilename: string;
 }
 
 export interface ILogger {

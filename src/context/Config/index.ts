@@ -3,6 +3,7 @@
  * @module Context
  */
 
+import appRoot from 'app-root-path';
 import { DBDriver, Env } from '../enums';
 import { IConfigValues, IDatabaseVals, IMultiDatabaseVals } from '../interfaces';
 
@@ -73,6 +74,12 @@ export default class Config implements IConfig {
      */
     public getEnv() {
         return this.env;
+    }
+
+    public getFirestoreConfig() {
+        const config = this.configValues.firestore!;
+        config.keyFilename = `${appRoot}/config/${config.keyFilename}`;
+        return config;
     }
 
     /**

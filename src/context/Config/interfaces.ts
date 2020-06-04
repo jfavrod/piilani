@@ -4,7 +4,13 @@
  */
 
 import { Env } from '../enums';
-import { IDatabaseVals, ILoggingConfig, IMultiDatabaseVals } from '../interfaces';
+
+import {
+    IDatabaseVals,
+    IFirebaseSettings,
+    ILoggingConfig,
+    IMultiDatabaseVals,
+} from '../interfaces';
 
 export interface IConfig {
     /** Get absolute path to the config directory. */
@@ -16,9 +22,11 @@ export interface IConfig {
     getConnectionString(db?: string): string;
     getDatabaseConfig(): IDatabaseVals | IMultiDatabaseVals | undefined;
     getEnv(): Env;
+    getFirestoreConfig(): IFirebaseSettings;
     getListenPort(): number | undefined;
     getLoggingConfig(): ILoggingConfig | undefined;
     getServiceConfig(serviceName: string): {[key: string]: any} | undefined;
     getServiceUrl(service: string): string | undefined;
     toString(): string;
 }
+
