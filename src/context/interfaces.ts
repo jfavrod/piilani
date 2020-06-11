@@ -41,6 +41,7 @@ export interface IFirebaseSettings extends FirebaseFirestore.Settings {
      * Role key file is stored.
      */
     keyFilename: string;
+    projectId: string;
 }
 
 export interface ILogger {
