@@ -3,7 +3,7 @@
  * @module Services
  */
 
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { ILogger } from '../../context/interfaces';
 import { IGatewayResponse, ITableDataGateway } from '../../gateways/interfaces';
 import { IServiceResponse } from '../interfaces';
@@ -14,11 +14,70 @@ import ExpressService from './ExpressService';
  * SEE: http://expressjs.com/
  */
 export default abstract class ExpressGatewayService extends ExpressService {
-    protected gateway: ITableDataGateway | ITableDataGateway[] | undefined;
+    public readonly className = this.constructor.name;
+    protected gateway?: ITableDataGateway;
 
-    constructor(gateway?: ITableDataGateway | ITableDataGateway[], logger?: ILogger) {
+    constructor(gateway?: ITableDataGateway, logger?: ILogger) {
         super(logger);
         this.gateway = gateway;
+        this.delete = this.delete.bind(this);
+        this.get = this.get.bind(this);
+        this.post = this.post.bind(this);
+        this.put = this.put.bind(this);
+    }
+
+    public async delete(req: Request, res: Response) {
+        let dbResponse: IGatewayResponse;
+        this.logger.log('info', `${this.className}.delete(${JSON.stringify(req.query)})`);
+
+        try {
+            dbResponse = await this.gateway!.delete(req.query.key);
+            this.sendDBResponse(res, dbResponse);
+        }
+        catch (err) {
+            this.logger.log('warn',
+                `${this.className}.delete(${JSON.stringify(req.query.appName)}): ${err.toString()}`);
+            this.sendError(res, err);
+        }
+    }
+
+    public async get(req: Request, res: Response) {
+        let dbResponse: IGatewayResponse;
+
+        try {
+            dbResponse = await this.gateway!.find(req.params);
+            this.sendDBResponse(res, dbResponse);
+        }
+        catch (err) {
+            this.logger.log('warn', `${this.className}.get: ${err.toString()}`);
+            this.sendError(res, err);
+        }
+    }
+
+    public async post(req: Request, res: Response) {
+        let dbResponse: IGatewayResponse;
+
+        try {
+            dbResponse = await this.gateway!.insert(req.body);
+            this.sendDBResponse(res, dbResponse, true);
+        }
+        catch (err) {
+            this.logger.log('warn', `${this.className}.post(${JSON.stringify(req.body)}): ${err.toString()}`);
+            this.sendError(res, err);
+        }
+    }
+
+    public async put(req: Request, res: Response) {
+        let dbResponse: IGatewayResponse;
+
+        try {
+            dbResponse = await this.gateway!.update(req.body);
+            this.sendDBResponse(res, dbResponse);
+        }
+        catch (err) {
+            this.logger.log('warn', `${this.className}.put(${JSON.stringify(req.body)}): ${err.toString()}`);
+            this.sendError(res, err);
+        }
     }
 
     /**
