@@ -14,7 +14,10 @@ export interface IIAMService {
      * (e.g. "AWS" resources such as s3, RDS, etc.).
      */
     resources: string;
-    getAccessToken(): any;
+    /** Get a token to access some resource. */
+    getAccessToken(...params: any): any;
+    /** Use to require authentication to some resource (e.g. an endpoint). */
+    requireAuthentication(...params: any): any;
 }
 
 export interface IServiceResponse {
