@@ -29,4 +29,3 @@ export interface IConfig {
     getServiceUrl(service: string): string | undefined;
     toString(): string;
 }
-

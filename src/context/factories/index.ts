@@ -15,17 +15,8 @@
  * @module Context.Factories
  * @preferred
  */
-import * as BaseClasses from './baseClasses';
-import ConfigFactory from './ConfigFactory';
-import * as interfaces from './interfaces';
-import LoggerFactory from './LoggerFactory';
 
-/**
- * @ignore
- */
-export default {
-    BaseClasses,
-    ConfigFactory,
-    LoggerFactory,
-    interfaces,
-};
+export { default as ConfigFactory } from './ConfigFactory';
+export { default as LoggerFactory } from './LoggerFactory';
+// export { default as GatewayFactory }  from './GatewayFactory';
+// export { default as ServiceFactory } from './ServiceFactory';
