@@ -1,14 +1,11 @@
-/**
- * @packageDocumentation
- * @module Context
- */
+/* eslint-disable no-shadow */
 
 export enum DBDriver {
     pg = 'pg',
 }
 
 export enum LogDriver {
-    WINSTON = 'winston',
+    winston = 'winston',
 }
 
 export enum Env {

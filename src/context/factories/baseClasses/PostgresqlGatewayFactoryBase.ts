@@ -21,7 +21,7 @@ import FactoryBase from './FactoryBase';
 export default class PostgresqlGatewayFactoryBase extends FactoryBase {
     private pool: Pool | undefined;
 
-    constructor() {
+    public constructor() {
         super();
         this.disconnect = this.disconnect.bind(this);
         this.getPool = this.getPool.bind(this);
@@ -32,7 +32,7 @@ export default class PostgresqlGatewayFactoryBase extends FactoryBase {
      * Subsequent calls that return gateways should establish a new
      * connection Pool.
      */
-    public async disconnect() {
+    public async disconnect(): Promise<boolean> {
         if (this.pool) {
             try {
                 await this.pool.end();
@@ -53,8 +53,8 @@ export default class PostgresqlGatewayFactoryBase extends FactoryBase {
 
             if (!(dbConfig instanceof Array)) {
                 dbConfig = dbConfig as IDatabaseVals;
-                if (dbConfig?.ssl && dbConfig.ssl!.ca) {
-                    caFile = (dbConfig as IDatabaseVals).ssl!.ca!;
+                if (dbConfig?.ssl && dbConfig.ssl.ca) {
+                    caFile = dbConfig.ssl?.ca;
                 }
             }
 

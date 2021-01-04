@@ -5,10 +5,5 @@
  * @module Context.Factories.BaseClasses
  * @preferred
  */
-import FactoryBase from './FactoryBase';
-import PostgresqlGatewayFactoryBase from './PostgresqlGatewayFactoryBase';
-
-export default {
-    FactoryBase,
-    PostgresqlGatewayFactoryBase,
-};
+export { default as FactoryBase } from './FactoryBase';
+export { default as PostgresqlGatewayFactoryBase } from './PostgresqlGatewayFactoryBase';

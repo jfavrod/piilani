@@ -1,4 +1,8 @@
-export function isIService(obj: any) {
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
+export const isIService = (obj: any): boolean => {
     const props = [
         'cert',
         'clientId',
@@ -18,4 +22,4 @@ export function isIService(obj: any) {
     }
 
     return bool;
-}
+};

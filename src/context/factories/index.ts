@@ -17,6 +17,4 @@
  */
 
 export { default as ConfigFactory } from './ConfigFactory';
-export { default as GatewayFactory }  from './GatewayFactory';
 export { default as LoggerFactory } from './LoggerFactory';
-export { default as ServiceFactory } from './ServiceFactory';

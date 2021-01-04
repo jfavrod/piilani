@@ -6,7 +6,7 @@
 export default class BuildError extends Error {
     public readonly name = 'BuildError';
 
-    constructor(mesg?: string) {
+    public constructor(mesg?: string) {
         super(mesg);
     }
 }

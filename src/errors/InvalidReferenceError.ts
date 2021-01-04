@@ -9,7 +9,7 @@
 export default class InvalidReferenceError extends Error {
     public readonly name = 'InvalidReferenceError';
 
-    constructor(mesg?: string) {
+    public constructor(mesg?: string) {
         super(mesg);
     }
 }

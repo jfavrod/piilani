@@ -10,7 +10,7 @@
 export default class InvalidValueError extends Error {
     public readonly name = 'InvalidValueError';
 
-    constructor(mesg?: string) {
+    public constructor(mesg?: string) {
         super(mesg);
     }
 }

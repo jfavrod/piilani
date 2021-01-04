@@ -3,8 +3,7 @@
  * @module Context.Factories.BaseClasses
  */
 
-import Config from '../../Config';
-import { ILogger } from '../../interfaces';
+import { IConfig, ILogger } from '../..';
 import ConfigFactory from '../ConfigFactory';
 import LoggerFactory from '../LoggerFactory';
 
@@ -20,10 +19,10 @@ import LoggerFactory from '../LoggerFactory';
  * ```
  */
 export default abstract class FactoryBase {
-    protected cachedConfig: Config | undefined;
+    protected cachedConfig: IConfig | undefined;
     protected cachedLogger: ILogger | undefined;
 
-    protected get config(): Config {
+    protected get config(): IConfig {
         if (!this.cachedConfig) {
             this.cachedConfig = ConfigFactory.getInstance();
         }

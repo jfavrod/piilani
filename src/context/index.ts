@@ -16,17 +16,28 @@
  * @preferred
  */
 
- import Config from './Config';
- import * as enums from './enums';
- import * as Factories from './factories';
- import * as interfaces from './interfaces';
+export {
+    DBDriver,
+    Env,
+    LogDriver,
+} from './enums';
 
-/**
- * @ignore
- */
- export default {
-     Config,
-     Factories,
-     enums,
-     interfaces,
- };
+export {
+    IConfigValues,
+    IDatabaseSSL,
+    IDatabaseVals,
+    IFirebaseSettings,
+    ILogger,
+    ILoggingConfig,
+    IMultiDatabaseVals,
+    IService,
+} from './interfaces';
+
+export {
+    IConfig,
+    isIConfig,
+} from './Config';
+
+export {
+    isIService,
+} from './typegaurds';

@@ -9,7 +9,7 @@
 export default class NotImplementedError extends Error {
     public readonly name = 'NotImplementedError';
 
-    constructor(mesg?: string) {
+    public constructor(mesg?: string) {
         super(mesg);
     }
 }

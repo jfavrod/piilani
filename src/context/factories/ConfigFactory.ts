@@ -3,14 +3,15 @@
  * @module Context.Factories
  */
 
-import appRoot from 'app-root-path';
 import { readFileSync } from 'fs';
+import appRoot from 'app-root-path';
 
-import { IConfigValues } from '../../interfaces';
+import { IConfig } from '../Config';
+import { IConfigValues } from '../interfaces';
 
-import ConfigError from '../../../errors/ConfigError';
-import Config from '../../Config';
-import { Env } from '../../enums';
+import ConfigError from '../../errors/ConfigError';
+import Config from '../Config';
+import { Env } from '../enums';
 
 /**
  * Constructs an `Config` object based on the application's
@@ -31,7 +32,7 @@ export default class ConfigFactory {
     private static nonProdConfigFile: string;
     private static prodConfigFile: string;
 
-    public static getInstance = (): Config => {
+    public static getInstance = (): IConfig => {
         let defaultConfigValues: Partial<IConfigValues>;
 
         if (ConfigFactory.config) {
@@ -44,7 +45,7 @@ export default class ConfigFactory {
             ConfigFactory.configDir = '/home/vcap/app/config';
         }
         else {
-            ConfigFactory.configDir = `${appRoot}/config`;
+            ConfigFactory.configDir = `${appRoot.path}/config`;
         }
 
         ConfigFactory.defaultConfigFile = `${ConfigFactory.configDir}/default.config.json`;
@@ -57,7 +58,7 @@ export default class ConfigFactory {
                 JSON.parse(readFileSync(ConfigFactory.defaultConfigFile).toString()) as Partial<IConfigValues>;
         }
         catch (err) {
-            throw new ConfigError(`Failed to read default config file. ${err.toString()}`);
+            throw new ConfigError(`Failed to read default config file. ${(err as Error).message}`);
         }
 
         if (process.env.PIILANI_ENV === Env.prod) {
@@ -68,7 +69,9 @@ export default class ConfigFactory {
                 return new Config(config, process.env.PIILANI_ENV, ConfigFactory.configDir);
             }
             catch (err) {
-                throw new ConfigError(`Failed to read prod config file (${ConfigFactory.prodConfigFile}). ${err.toString()}`);
+                throw new ConfigError(
+                    `Failed to read prod config file (${ConfigFactory.prodConfigFile}). ${(err as Error).message}`
+                );
             }
         }
         else if (process.env.PIILANI_ENV === Env['non-prod']) {
@@ -79,7 +82,9 @@ export default class ConfigFactory {
                 return new Config(config, process.env.PIILANI_ENV, ConfigFactory.configDir);
             }
             catch (err) {
-                throw new ConfigError(`Failed to read non-prod config file (${ConfigFactory.prodConfigFile}). ${err.toString()}`);
+                throw new ConfigError(
+                    `Failed to read non-prod config file (${ConfigFactory.prodConfigFile}). ${(err as Error).message}`
+                );
             }
         }
         else {
@@ -89,8 +94,10 @@ export default class ConfigFactory {
                 return new Config(config, Env.dev, ConfigFactory.configDir);
             }
             catch (err) {
-                throw new ConfigError(`Failed to read dev config file (${ConfigFactory.devConfigFile}). ${err.toString()}`);
+                throw new ConfigError(
+                    `Failed to read dev config file (${ConfigFactory.devConfigFile}). ${(err as Error).message}`
+                );
             }
         }
-    }
+    };
 }

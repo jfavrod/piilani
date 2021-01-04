@@ -10,7 +10,7 @@
 export default class InvalidOperationError extends Error {
     public readonly name = 'InvalidOperationError';
 
-    constructor(mesg?: string) {
+    public constructor(mesg?: string) {
         super(mesg);
     }
 }

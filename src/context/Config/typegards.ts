@@ -1,6 +1,8 @@
-import * as IFace from './interfaces';
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-export function isIConfig(obj: any): boolean {
+export const isIConfig = (obj: any): boolean => {
     const functions = [
         'getConfigDir',
         'getConnectionString',
@@ -23,4 +25,4 @@ export function isIConfig(obj: any): boolean {
     }
 
     return validation;
-}
+};

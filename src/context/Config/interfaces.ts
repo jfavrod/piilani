@@ -15,14 +15,16 @@ import {
 export interface IConfig {
     /** Get absolute path to the config directory. */
     getConfigDir(): string;
+
     /**
      * Get a database connection string.
      * @param db If multiple databases configured, use db to select.
      */
     getConnectionString(db?: string): string;
+
     getDatabaseConfig(): IDatabaseVals | IMultiDatabaseVals | undefined;
     getEnv(): Env;
-    getFirestoreConfig(): IFirebaseSettings;
+    getFirestoreConfig(): IFirebaseSettings | undefined;
     getListenPort(): number | undefined;
     getLoggingConfig(): ILoggingConfig | undefined;
     getServiceConfig(serviceName: string): {[key: string]: any} | undefined;
