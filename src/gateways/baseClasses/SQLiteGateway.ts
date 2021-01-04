@@ -1,7 +1,7 @@
 import SQLite3, { Database } from 'better-sqlite3';
 
-import { ILogger } from "../../context/interfaces";
-import { IGatewayResponse, ITableDataGateway } from "../interfaces";
+import { ILogger } from '../../context/interfaces';
+import { IGatewayResponse, ITableDataGateway } from '../interfaces';
 import GatewayBase from './GatewayBase';
 
 export default abstract class SQLiteGateway extends GatewayBase implements ITableDataGateway {
@@ -22,12 +22,12 @@ export default abstract class SQLiteGateway extends GatewayBase implements ITabl
         this.update = this.update.bind(this);
     }
 
+    protected getConnection(): Database {
+        return new SQLite3(this.dbFile);
+    }
+
     public abstract delete(id: number): Promise<IGatewayResponse>;
     public abstract find(query?: any): Promise<IGatewayResponse>;
     public abstract insert(record: any): Promise<IGatewayResponse>;
     public abstract update(record: any): Promise<IGatewayResponse>;
-
-    protected getConnection(): Database {
-        return new SQLite3(this.dbFile);
-    }
 }

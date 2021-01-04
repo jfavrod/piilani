@@ -14,11 +14,11 @@ import ServiceBase from './ServiceBase';
  * SEE: http://expressjs.com/
  */
 export default abstract class ExpressService extends ServiceBase {
-    constructor(logger?: ILogger) {
+    public constructor(logger?: ILogger) {
         super(logger);
     }
 
-    protected sendError = (res: Response, err: Error) => {
+    protected sendError(res: Response, err: Error): void {
         res.status(500).json({
             code: 500,
             error: true,
@@ -31,7 +31,7 @@ export default abstract class ExpressService extends ServiceBase {
      * @param dbResponse The response from a Table Data Gateway used by this Service.
      * @param created Set to true if the request was for creating a database record.
      */
-    protected sendGatewayResponse(res: Response, dbResponse: IGatewayResponse, created?: boolean) {
+    protected sendGatewayResponse(res: Response, dbResponse: IGatewayResponse, created?: boolean): void {
         const response: IServiceResponse = {
             code: 200,
             data: undefined,
@@ -57,6 +57,8 @@ export default abstract class ExpressService extends ServiceBase {
         }
 
         if (dbResponse.data) {
+            // TODO: fix this.
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             response.data = dbResponse.data;
         }
 
@@ -67,7 +69,7 @@ export default abstract class ExpressService extends ServiceBase {
         res.status(response.code).json(response);
     }
 
-    protected sendServiceResponse(res: Response, serviceResponse: IServiceResponse) {
+    protected sendServiceResponse(res: Response, serviceResponse: IServiceResponse): void {
         res.status(serviceResponse.code).json(serviceResponse);
     }
 }

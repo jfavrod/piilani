@@ -121,8 +121,8 @@ module.exports = {
         "id-match": "error",
         "import/order": "warn",
         "jsdoc/check-alignment": "error",
-        "jsdoc/check-indentation": "error",
-        "jsdoc/newline-after-description": "error",
+        "jsdoc/check-indentation": "off",
+        "jsdoc/newline-after-description": "off",
         "max-classes-per-file": [
             "error",
             1

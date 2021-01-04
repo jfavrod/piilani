@@ -10,7 +10,7 @@ export default abstract class ServiceBase {
     public readonly className: string = this.constructor.name;
     protected logger: ILogger;
 
-    constructor(logger?: ILogger) {
+    public constructor(logger?: ILogger) {
         if (logger) {
             this.logger = logger;
         }
