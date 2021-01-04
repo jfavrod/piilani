@@ -1,4 +1,5 @@
 .DS_Store
+.vscode
 tsconfig.tsbuildinfo
 dist/
 node_modules/
