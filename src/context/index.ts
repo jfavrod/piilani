@@ -39,5 +39,6 @@ export {
 } from './Config';
 
 export {
+    isILogger,
     isIService,
 } from './typegaurds';
