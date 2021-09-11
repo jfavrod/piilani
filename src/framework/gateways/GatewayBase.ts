@@ -4,7 +4,7 @@
  */
 
 import { ILogger } from '../../context/interfaces';
-import { IGatewayResponse } from '../interfaces';
+import { IGatewayResponse } from './interfaces';
 
 export default class GatewayBase {
     protected logger: ILogger;

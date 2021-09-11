@@ -1,19 +1,10 @@
-/**
- * @packageDocumentation
- * @module Services
- */
-
 import { Request, Response } from 'express';
-import { ILogger } from '../../context/interfaces';
-import { IGatewayResponse, ITableDataGateway } from '../../gateways/interfaces';
-import { IServiceResponse } from '../interfaces';
-import ExpressService from './ExpressService';
+import { ILogger } from '../context/interfaces';
+import { IGatewayResponse, ITableDataGateway } from '../gateways/interfaces';
+import { IServiceResponse } from '../services/interfaces';
+import ControllerBase from './ControllerBase';
 
-/**
- * Base class for transporting database data to/from a client using express.
- * SEE: http://expressjs.com/
- */
-export default abstract class ExpressGatewayService extends ExpressService {
+export default abstract class ExpressGatewayRouter extends ControllerBase {
     public readonly className = this.constructor.name;
     protected gateway: ITableDataGateway;
 
@@ -34,12 +25,12 @@ export default abstract class ExpressGatewayService extends ExpressService {
             // TODO: fix this.
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             dbResponse = await this.gateway.delete(req.query.key);
-            this.sendDBResponse(res, dbResponse);
+            this.sendGatewayResponse(res, dbResponse);
         }
         catch (err) {
             this.logger.log('warn',
                 `${this.className}.delete(): ${(err as Error).message}`);
-            this.sendError(res, err);
+            this.sendError(res, err as Error);
         }
     }
 
@@ -48,11 +39,11 @@ export default abstract class ExpressGatewayService extends ExpressService {
 
         try {
             dbResponse = await this.gateway.find(req.params);
-            this.sendDBResponse(res, dbResponse);
+            this.sendGatewayResponse(res, dbResponse);
         }
         catch (err) {
             this.logger.log('warn', `${this.className}.get: ${(err as Error).message}`);
-            this.sendError(res, err);
+            this.sendError(res, err as Error);
         }
     }
 
@@ -61,11 +52,11 @@ export default abstract class ExpressGatewayService extends ExpressService {
 
         try {
             dbResponse = await this.gateway.insert(req.body);
-            this.sendDBResponse(res, dbResponse, true);
+            this.sendGatewayResponse(res, dbResponse, true);
         }
         catch (err) {
             this.logger.log('warn', `${this.className}.post(${JSON.stringify(req.body)}): ${(err as Error).message}`);
-            this.sendError(res, err);
+            this.sendError(res, err as Error);
         }
     }
 
@@ -74,12 +65,20 @@ export default abstract class ExpressGatewayService extends ExpressService {
 
         try {
             dbResponse = await this.gateway.update(req.body);
-            this.sendDBResponse(res, dbResponse);
+            this.sendGatewayResponse(res, dbResponse);
         }
         catch (err) {
             this.logger.log('warn', `${this.className}.put(${JSON.stringify(req.body)}): ${(err as Error).message}`);
-            this.sendError(res, err);
+            this.sendError(res, err as Error);
         }
+    }
+
+    protected sendError(res: Response, err: Error): void {
+        res.status(500).json({
+            code: 500,
+            error: true,
+            message: err.toString(),
+        } as IServiceResponse);
     }
 
     /**
@@ -87,7 +86,7 @@ export default abstract class ExpressGatewayService extends ExpressService {
      * @param dbResponse The response from a Table Data Gateway used by this Service.
      * @param created Set to true if the request was for creating a database record.
      */
-    protected sendDBResponse = (res: Response, dbResponse: IGatewayResponse, created?: boolean): void => {
+    protected sendGatewayResponse(res: Response, dbResponse: IGatewayResponse, created?: boolean): void {
         const response: IServiceResponse = {
             code: 200,
             data: undefined,
@@ -123,5 +122,9 @@ export default abstract class ExpressGatewayService extends ExpressService {
         }
 
         res.status(response.code).json(response);
-    };
+    }
+
+    protected sendServiceResponse(res: Response, serviceResponse: IServiceResponse): void {
+        res.status(serviceResponse.code).json(serviceResponse);
+    }
 }

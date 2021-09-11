@@ -9,7 +9,7 @@ import appRoot from 'app-root-path';
 import { IConfig } from '../Config';
 import { IConfigValues } from '../interfaces';
 
-import ConfigError from '../../errors/ConfigError';
+import ConfigError from '../../framework/errors/ConfigError';
 import Config from '../Config';
 import { Env } from '../enums';
 

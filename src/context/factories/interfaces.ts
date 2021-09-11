@@ -3,8 +3,8 @@
  * @module Context.Factories
  */
 
-import { ITableDataGateway } from '../../gateways/interfaces';
-import { IIAMService } from '../../services/interfaces';
+import { ITableDataGateway } from '../../framework/gateways/interfaces'
+import { IIAMService } from '../../framework/services'
 
 export interface IGatewayFactory {
     /**

@@ -1,7 +1,7 @@
 import SQLite3, { Database } from 'better-sqlite3';
 
 import { ILogger } from '../../context/interfaces';
-import { IGatewayResponse, ITableDataGateway } from '../interfaces';
+import { IGatewayResponse, ITableDataGateway } from './interfaces';
 import GatewayBase from './GatewayBase';
 
 export default abstract class SQLiteGateway extends GatewayBase implements ITableDataGateway {
