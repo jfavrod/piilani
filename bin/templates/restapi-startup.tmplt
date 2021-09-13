@@ -1,0 +1,15 @@
+import { ConfigFactory, LoggerFactory } from 'piilani/lib/factories';
+import 'reflect-metadata'
+import { container } from 'tsyringe
+
+container.register('IConfig', {
+    useValue: ConfigFactory.getInstance(),
+})
+
+container.register('ILogger', {
+    useValue: LoggerFactory.getInstance(),
+})
+
+container.register<DefaultRestController>("RestController", {
+    useClass: DefaultRestController,
+})

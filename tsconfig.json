@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "target": "es5",
     "module": "commonjs",
     "lib": [],
-    "outDir": "./dist",
+    "outDir": "./lib",
     "rootDir": "./src",
     "strict": true,
+    "declaration": true,
     "esModuleInterop": true
   },
   "exclude": [
     "./bin",
-    "./dist"
+    "./lib"
   ],
   "typedocOptions": {
     "mode": "modules",

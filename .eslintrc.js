@@ -15,6 +15,9 @@ module.exports = {
     "env": {
         "node": true
     },
+    "ignore": [
+        "bin/"
+    ],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking"

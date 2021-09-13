@@ -5,6 +5,7 @@
 
 import { LoggerOptions } from 'winston';
 import { DBDriver, LogDriver } from './enums';
+import * as FirebaseFirestore from '@google-cloud/firestore'
 
 export interface IConfigValues {
     [index: string]: any;
@@ -44,8 +45,14 @@ export interface IFirebaseSettings extends FirebaseFirestore.Settings {
     projectId: string;
 }
 
+
+export type LogLevel = 'debug' | 'error' | 'fatal' | 'info' | 'warn';
 export interface ILogger {
-    log(level: string, mesg?: string): void;
+    debug(mesg?: string): void;
+    error(mesg?: string): void;
+    info(mesg?: string): void;
+    log(level: LogLevel, mesg?: string): void;
+    warn(mesg?: string): void;
 }
 
 export interface ILoggingConfig extends LoggerOptions {

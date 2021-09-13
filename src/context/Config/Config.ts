@@ -1,10 +1,7 @@
-/**
- * @packageDocumentation
- * @module Context
- */
+import appRoot from 'app-root-path'
+import { injectable } from 'tsyringe'
 
-import appRoot from 'app-root-path';
-import { DBDriver, Env } from '../enums';
+import { DBDriver, Env } from '../enums'
 
 import {
     IConfigValues,
@@ -13,10 +10,11 @@ import {
     ILoggingConfig,
     IMultiDatabaseVals,
     IService,
-} from '../interfaces';
+} from '../interfaces'
 
-import { IConfig } from './interfaces';
+import { IConfig } from './interfaces'
 
+@injectable()
 export default class Config implements IConfig {
     private configDir: string;
     private configValues: IConfigValues;

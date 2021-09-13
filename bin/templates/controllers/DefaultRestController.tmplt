@@ -1,0 +1,18 @@
+import { Express } from 'express'
+import { ILogger } from '../context'
+import ExpressRestController from 'piilani/controllers/ExpressRestController'
+
+const basePath = ''
+
+@injectable()
+export default class DefaultRestController extends RestController {
+    public constructor(@inject("ILogger")logger: ILogger) {
+        super();
+    }
+
+    @httpGet(`${basePath}/hello/:firstName/:lastName?`)
+    public get(@fromPath("firstName") first: string, @fromPath("lastName")last: string) {
+        if (last) return `hello ${first} ${last}`
+        else return `hello ${first}`
+    }
+}

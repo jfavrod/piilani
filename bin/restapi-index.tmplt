@@ -1,0 +1,19 @@
+import express from 'express'
+import cors from 'cors'
+
+import { ConfigFactory } from './context/factories'
+import { LoggerFactory } from './context/factories'
+
+const app = express();
+const config = ConfigFactory.getInstance();
+const logger = LoggerFactory.getInstance();
+const port = config.getListenPort() || 3000;
+
+app.use(cors());
+
+process.on('unhandledRejection', (reason, p) =>
+    // tslint:disable-next-line: no-console
+  logger.error('Unhandled Rejection at: Promise ', p, reason),
+);
+
+app.listen(port, () => logger.log('info', `listening on port ${port}`));
