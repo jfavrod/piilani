@@ -2,7 +2,7 @@ import { Express } from 'express'
 import { ILogger } from '../context'
 import ExpressRestController from 'piilani/controllers/ExpressRestController'
 
-const basePath = ''
+const basePath = '/hello'
 
 @injectable()
 export default class DefaultRestController extends RestController {
@@ -10,7 +10,7 @@ export default class DefaultRestController extends RestController {
         super();
     }
 
-    @httpGet(`${basePath}/hello/:firstName/:lastName?`)
+    @httpGet(`${basePath}/:firstName/:lastName?`)
     public get(@fromPath("firstName") first: string, @fromPath("lastName")last: string) {
         if (last) return `hello ${first} ${last}`
         else return `hello ${first}`
