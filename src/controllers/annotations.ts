@@ -3,8 +3,14 @@ import { Response } from 'express'
 
 import { RestController } from '.';
 import { ServiceFactory } from '../factories';
-import { Response as HttpResponse, Ok } from './Http';
-import BadRequest from './Http/BadRequest';
+
+import { 
+    BadRequest,
+    Response as HttpResponse,
+    Ok
+} from './Http';
+
+import { MetaData } from '../context';
 
 type Consturctor = { new (...args: any[]): any };
 
@@ -14,8 +20,9 @@ type IParamMetadata = {
 };
 
 const fromPathMetadataKey = Symbol("fromPath");
+let restMetaData: MetaData<RestController>;
 
-export const fromPath = function(param: string, type?: string) {
+export function fromPath(param: string, type?: string) {
     return function(target: RestController, propertyKey: string | symbol, parameterIndex: number) {
 
         let existingPathParams: IParamMetadata[] = Reflect.getOwnMetadata(fromPathMetadataKey, target, propertyKey) || [];
@@ -53,29 +60,22 @@ const handleResponse = (res: Response, response: HttpResponse) => {
  * RestController decorator for methods that handle HttpGet requests.
  * @param path 
  */
-export const httpGet = function(path: string) {
-    return function (target: RestController, propertyName: string, descriptor: any) {
-        let method = descriptor.value;
-        let args: IArguments;
+export function httpGet(path: string) {
+    return function (target: RestController, propertyName: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+        let params: IParamMetadata[] = Reflect.getOwnMetadata(fromPathMetadataKey, target, propertyName) || [];
+        const originalMethod = descriptor.value;
+        const http = ServiceFactory.getHttpServer()
 
-        descriptor.value = function() {
-            let existingPathParams: IParamMetadata[] = Reflect.getOwnMetadata(fromPathMetadataKey, target, propertyName) || [];
-
-            if (existingPathParams) {
-                return existingPathParams;
-            }
-        };
-
-        ServiceFactory.getHttpServer().get(path, (req, res) => {
+        http.get(path, (req, res) => {
             const args = [] as any[];
-            var params = descriptor.value() as IParamMetadata[];
 
             params = params.sort((a, b) => a.index - b.index);
+
             params.forEach((param) => {
                 args.push(req.params[param.paramName])
             });
 
-            const returnValue = method(...args);
+            const returnValue = descriptor.value.call(restMetaData.getRef(target.constructor.name), ...args);
 
             if (returnValue instanceof HttpResponse) {
                 handleResponse(res, returnValue);
@@ -84,11 +84,18 @@ export const httpGet = function(path: string) {
                 res.send(returnValue);
             }
         });
+
+        descriptor.value = function(this: any, ...args: any[]) {
+            return originalMethod.apply(this, args);
+        }
+
+
+        return descriptor;
     }
 };
 
-export function restController(basePath?: string) {
+export function restController(md: MetaData<RestController>) {
+    restMetaData = md;
     return function<T extends Consturctor>(constructor: T) {
-        constructor.prototype.basePath = basePath;
     }
 };
