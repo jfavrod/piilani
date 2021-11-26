@@ -8,7 +8,6 @@ export {
     IConfigValues,
     IDatabaseSSL,
     IDatabaseVals,
-    IFirebaseSettings,
     ILogger,
     ILoggingConfig,
     IMultiDatabaseVals,
@@ -19,8 +18,6 @@ export {
     IConfig,
     isIConfig,
 } from './Config';
-
-export { default as MetaData } from './MetaData'
 
 export {
     isILogger,

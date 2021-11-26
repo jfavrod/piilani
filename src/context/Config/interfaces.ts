@@ -7,7 +7,6 @@ import { Env } from '../enums';
 
 import {
     IDatabaseVals,
-    IFirebaseSettings,
     ILoggingConfig,
     IMultiDatabaseVals,
 } from '../interfaces';
@@ -24,7 +23,6 @@ export interface IConfig {
 
     getDatabaseConfig(): IDatabaseVals | IMultiDatabaseVals | undefined;
     getEnv(): Env;
-    getFirestoreConfig(): IFirebaseSettings | undefined;
     getListenPort(): number | undefined;
     getLoggingConfig(): ILoggingConfig | undefined;
     getServiceConfig(serviceName: string): {[key: string]: any} | undefined;

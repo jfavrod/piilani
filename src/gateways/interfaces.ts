@@ -1,11 +1,6 @@
 /**
- * @packageDocumentation
- * @module Gateways
+ * Common interfaces for Gateways classes (Gateways).
  */
-
- /**
-  * Common interfaces for Gateways classes (Gateways).
-  */
 
 export interface IGatewayResponse {
     /**

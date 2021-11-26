@@ -1,23 +1,17 @@
-import express from 'express';
-import cors from 'cors';
-
+import http, { Server } from 'http'
 import FactoryBase from './FactoryBase'
+
 import ConfigFactory from './ConfigFactory'
 
-const config = ConfigFactory.getInstance();
-
 export default class ServiceFactory extends FactoryBase {
-    private static httpServer: express.Express;
+    private static config = ConfigFactory.getInstance();
+    private static server: Server
 
-    public static getHttpServer(): express.Express {
-        if (!ServiceFactory.httpServer) {
-            const app = express();
-            app.use(cors());
-            app.listen(config.getListenPort() || 3000);
-
-            ServiceFactory.httpServer = app;
+    public static getHttpServer(): Server {
+        if (!ServiceFactory.server) {
+            ServiceFactory.server = http.createServer()
+            ServiceFactory.server.listen(this.config.getListenPort())
         }
-
-        return ServiceFactory.httpServer;
+        return ServiceFactory.server;
     }
 }

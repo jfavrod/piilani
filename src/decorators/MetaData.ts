@@ -1,4 +1,4 @@
-export default class MetaData<T> {
+export class MetaData<T> {
     public ref: T | null = null;
     public store: {[key: string]: any} = {}
 
@@ -12,3 +12,5 @@ export default class MetaData<T> {
         return this.refs.get(name);
     }
 }
+
+export default MetaData;

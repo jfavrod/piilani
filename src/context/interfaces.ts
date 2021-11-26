@@ -5,13 +5,11 @@
 
 import { LoggerOptions } from 'winston';
 import { DBDriver, LogDriver } from './enums';
-import * as FirebaseFirestore from '@google-cloud/firestore'
 
 export interface IConfigValues {
     [index: string]: any;
     /** Supported Drivers: postgres (pg/node-postgres) */
     database?: IDatabaseVals | IMultiDatabaseVals;
-    firestore?: IFirebaseSettings;
     listenPort?: number;
     logging: ILoggingConfig;
     services?: { [key: string]: IService };
@@ -35,16 +33,6 @@ export interface IDatabaseVals {
     ssl?: IDatabaseSSL;
     user: string;
 }
-
-export interface IFirebaseSettings extends FirebaseFirestore.Settings {
-    /**
-     * Path (relative to the config directory) where the GCP Service
-     * Role key file is stored.
-     */
-    keyFilename: string;
-    projectId: string;
-}
-
 
 export type LogLevel = 'debug' | 'error' | 'fatal' | 'info' | 'warn';
 export interface ILogger {

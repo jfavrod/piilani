@@ -1,8 +1,3 @@
-/**
- * @packageDocumentation
- * @module Errors
- */
-
 export default class ConfigError extends Error {
     public readonly name = 'ConfigError';
 

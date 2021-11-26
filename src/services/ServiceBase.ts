@@ -1,6 +1,6 @@
 import { ILogger } from '../context/interfaces';
 
-export default abstract class ServiceBase {
+export abstract class ServiceBase {
     public readonly className: string = this.constructor.name;
     protected logger: ILogger;
 
@@ -13,3 +13,5 @@ export default abstract class ServiceBase {
         }
     }
 }
+
+export default ServiceBase;

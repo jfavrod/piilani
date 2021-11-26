@@ -1,13 +1,15 @@
-import { ControllerBase } from "../controllers";
+import { HttpControllerBase } from '../controllers/http';
 
-export default class ControllerRegistry {
-    private static controllers = [] as ControllerBase[];
+export class HttpControllerRegistry {
+    private static controllers = [] as HttpControllerBase[];
 
-    public static addController(controller: ControllerBase) {
-        ControllerRegistry.controllers.push(controller);
+    public static addController(controller: HttpControllerBase): void {
+        HttpControllerRegistry.controllers.push(controller);
     }
 
-    public static getControllers() {
-        return ControllerRegistry.controllers;
+    public static getControllers(): HttpControllerBase[] {
+        return HttpControllerRegistry.controllers;
     }
 }
+
+export default HttpControllerRegistry

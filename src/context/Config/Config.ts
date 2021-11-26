@@ -6,7 +6,6 @@ import { DBDriver, Env } from '../enums'
 import {
     IConfigValues,
     IDatabaseVals,
-    IFirebaseSettings,
     ILoggingConfig,
     IMultiDatabaseVals,
     IService,
@@ -83,22 +82,12 @@ export default class Config implements IConfig {
         return this.env;
     }
 
-    public getFirestoreConfig(): IFirebaseSettings | undefined {
-        const config = this.configValues.firestore;
-
-        if (config) {
-            config.keyFilename = `${appRoot.path}/config/${config.keyFilename}`;
-        }
-
-        return config;
-    }
-
     /**
      * If running as a service, the port the service is supposed to
      * listen on.
      */
     public getListenPort(): number | undefined {
-        return this.configValues.listenPort;
+        return this.configValues.listenPort || 3000;
     }
 
     /**
@@ -121,7 +110,7 @@ export default class Config implements IConfig {
         const services: string[] = [];
 
         for (const service in this.configValues.services) {
-            if (this.configValues.services.hasOwnProperty(service)) {
+            if (this.configValues.services[service]) {
                 services.push(service);
             }
         }
