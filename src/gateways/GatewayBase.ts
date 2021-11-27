@@ -3,9 +3,10 @@ import { IGatewayResponse, ITableDataGateway } from './interfaces';
 
 /**
  * @type {E} Entity for datasource operations.
- * @type {E} Query object for key/value pair searches.
+ * @type {Q} Query object for key/value pair searches.
  */
 export default class GatewayBase<E, Q> implements ITableDataGateway {
+    public readonly className = this.constructor.name;
     public readonly table: string;
     protected logger: ILogger;
 
@@ -14,35 +15,35 @@ export default class GatewayBase<E, Q> implements ITableDataGateway {
         this.logger = logger;
     }
 
-    delete(query: Q): IGatewayResponse {
+    delete(query: Q): IGatewayResponse<any> {
         throw new Error('Method not implemented.');
     }
 
-    deleteAsync(query: Q): Promise<IGatewayResponse> {
+    deleteAsync(query: Q): Promise<IGatewayResponse<any>> {
         throw new Error('Method not implemented.');
     }
 
-    find(query?: Q): IGatewayResponse {
+    find(query?: Q): IGatewayResponse<any> {
         throw new Error('Method not implemented.');
     }
 
-    findAsync(query?: Q): Promise<IGatewayResponse> {
+    findAsync(query?: Q): Promise<IGatewayResponse<any>> {
         throw new Error('Method not implemented.');
     }
 
-    insert(record: E): IGatewayResponse {
+    insert(record: E): IGatewayResponse<any> {
         throw new Error('Method not implemented.');
     }
 
-    insertAsync(record: E): Promise<IGatewayResponse> {
+    insertAsync(record: E): Promise<IGatewayResponse<any>> {
         throw new Error('Method not implemented.');
     }
 
-    update(record: E): IGatewayResponse {
+    update(record: E): IGatewayResponse<any> {
         throw new Error('Method not implemented.');
     }
 
-    updateAsync(record: E): Promise<IGatewayResponse> {
+    updateAsync(record: E): Promise<IGatewayResponse<any>> {
         throw new Error('Method not implemented.');
     }
 
@@ -50,7 +51,7 @@ export default class GatewayBase<E, Q> implements ITableDataGateway {
      * Get a default IGatewayResponse object.
      * @returns {IGatewayResponse} { class: 2, message: 'default response' }
      */
-    protected getDefaultResponse = (): IGatewayResponse => {
+    protected getDefaultResponse = (): IGatewayResponse<any> => {
         return {
             class: 2,
             message: 'default response',
