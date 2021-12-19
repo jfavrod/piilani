@@ -1,7 +1,6 @@
 export {
     DBDriver,
     Env,
-    LogDriver,
 } from './enums';
 
 export {

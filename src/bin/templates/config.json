@@ -1,0 +1,23 @@
+{
+    "database": {
+        "host": "",
+        "name": "",
+        "password": "",
+        "port": 0,
+        "ssl": {
+            "ca": "",
+            "cert": "",
+            "key": ""
+        },
+        "user": ""
+    },
+    "listenPort": 3000,
+    "logging": {
+        "http": {
+            "host": "",
+            "port": 0
+        },
+        "level": "debug"
+    },
+    "services": {}
+}

@@ -28,7 +28,7 @@ export default class ConfigFactory {
     private static prodConfigFile: string;
 
     public static getInstance = (): IConfig => {
-        let defaultConfigValues: Partial<IConfigValues>;
+        let defaultConfigValues: Partial<IConfigValues> = {};
 
         if (ConfigFactory.config) {
             return ConfigFactory.config;
@@ -43,17 +43,18 @@ export default class ConfigFactory {
             ConfigFactory.configDir = `${appRoot.path}/config`;
         }
 
-        ConfigFactory.defaultConfigFile = `${ConfigFactory.configDir}/default.config.json`;
+        ConfigFactory.defaultConfigFile = `${ConfigFactory.configDir}/config.json`;
         ConfigFactory.devConfigFile = `${ConfigFactory.configDir}/dev.config.json`;
         ConfigFactory.nonProdConfigFile = `${ConfigFactory.configDir}/non-prod.config.json`;
         ConfigFactory.prodConfigFile = `${ConfigFactory.configDir}/prod.config.json`;
 
         try {
             defaultConfigValues =
-                JSON.parse(readFileSync(ConfigFactory.defaultConfigFile).toString()) as Partial<IConfigValues>;
+                JSON.parse(readFileSync(ConfigFactory.defaultConfigFile).toString()) as Partial<IConfigValues> || {};
         }
         catch (err) {
-            throw new ConfigError(`Failed to read default config file. ${(err as Error).message}`);
+            console.error(`Failed to read default config file. ${(err as Error).message}`);
+            process.exit(1);
         }
 
         if (process.env.PIILANI_ENV === Env.prod) {
@@ -89,9 +90,10 @@ export default class ConfigFactory {
                 return new Config(config, Env.dev, ConfigFactory.configDir);
             }
             catch (err) {
-                throw new ConfigError(
+                console.error(
                     `Failed to read dev config file (${ConfigFactory.devConfigFile}). ${(err as Error).message}`
                 );
+                return {} as IConfig;
             }
         }
     };

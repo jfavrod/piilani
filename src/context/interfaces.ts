@@ -4,7 +4,7 @@
  */
 
 import { LoggerOptions } from 'winston';
-import { DBDriver, LogDriver } from './enums';
+import { DBDriver } from '.';
 
 export interface IConfigValues {
     [index: string]: any;
@@ -44,13 +44,11 @@ export interface ILogger {
 }
 
 export interface ILoggingConfig extends LoggerOptions {
-    [index: string]: any;
-    driver: LogDriver;
     http?: {
         host: string;
         port: number;
     };
-    level: string;
+    level: LogLevel;
 }
 
 export interface IMultiDatabaseVals {

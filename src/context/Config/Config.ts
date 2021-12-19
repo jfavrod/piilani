@@ -53,7 +53,7 @@ export default class Config implements IConfig {
             return (this.configValues.database as IMultiDatabaseVals)[db].toString();
         }
         else {
-            if (this.configValues.database?.driver === DBDriver.pg) {
+            if (this.configValues.database?.driver === DBDriver.POSTGRES) {
                 const dbVals = this.configValues.database as IDatabaseVals;
                 connString = 'postgresql://';
                 connString += this.configValues.database.user;

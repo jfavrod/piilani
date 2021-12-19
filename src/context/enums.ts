@@ -1,11 +1,5 @@
-/* eslint-disable no-shadow */
-
 export enum DBDriver {
-    pg = 'pg',
-}
-
-export enum LogDriver {
-    winston = 'winston',
+    POSTGRES = 'pg',
 }
 
 export enum Env {

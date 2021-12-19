@@ -22,6 +22,12 @@ Getting Started
 
 ### Installation
 
+To initialize your project directory run the following Piilani command:
+{{/path/to/binary}} init
+
+This will create a `config` directory and config files for each supported
+environment.
+
 ### Environment
 There are 3 runtime environments and the `PIILANI_ENV` environment variable to
 specify which one the app is currently running in:
@@ -40,6 +46,18 @@ specify which one the app is currently running in:
 
 
 ### Configuration
+After initializing the project (see **Installation**), you'll have 4
+configuration files in your `config` directory. The `config.json` file is the
+default. The `dev.config.json`, `non-prod.config.json`, and `prod.config.json`
+files are for overriding the default configuration in the respective runttime
+environments (see **Environment**).
+
+
+#### Database
+The app can be configured to use one or many databases. Currently, only
+PostgreSQL is officially supported. You can still use other databases, but
+certain convenience functions (like the `getConnectionString` method of the
+`Config` class).
 
 
 ### Rest Controllers
