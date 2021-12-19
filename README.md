@@ -9,13 +9,34 @@ Prerequisites
 -------------
 The following software is required:
 
+* app-root-path
 * Nodejs
 * NPM
+* reflect-metadata
+* tsyringe
+* winston
+* winston-logger
 
 Getting Started
 ---------------
 
 ### Installation
+
+### Environment
+There are 3 runtime environments and the `PIILANI_ENV` environment variable to
+specify which one the app is currently running in:
+
+```
++-------------------+---------------+
+| Environment       | PIILANI_ENV   |
++-------------------+---------------+
+| development       | dev           |
++-------------------+---------------+
+| non-production    | non-prod      |
++-------------------+---------------+
+| production        | prod          |
++-------------------+---------------+
+```
 
 
 ### Configuration
