@@ -1,8 +1,24 @@
 import approot from 'app-root-path'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
+import { execSync } from 'child_process'
 
 const configDir = `${approot.path}/config`;
 const defaultConfig = `${configDir}/config.json`;
+const packageFile = `${approot.path}/package.json`;
+
+const devDependencies = Object.freeze([
+  '@types/node',
+  '@types/app-root-path',
+  'typescript'
+]);
+
+const prodDependencies = Object.freeze([
+  'app-root-path',
+  'reflect-metadata',
+  'tsyringe',
+  'winston',
+  'winston-logger'
+]);
 
 const main = () => {
   if (getCommand() === 'init') {
@@ -21,7 +37,35 @@ const init = () => {
   makeConfigDir();
   makeDefaultConfig();
   makeEnvConfigs();
+  installRequired();
 }
+
+const installRequired = () => {
+  let installing = '';
+
+  try {
+    const pkgFile = JSON.parse(readFileSync(packageFile).toString());
+    const prodDeps: string[] = Object.keys(pkgFile.dependencies || {});
+    const devDeps: string[] = Object.keys(pkgFile.devDependencies || {});
+
+      prodDependencies.forEach((prodDep) => {
+        if (!prodDeps.includes(prodDep)) {
+          installing = prodDep;
+          execSync(`npm i ${prodDep}`);
+        }
+      });
+
+      devDependencies.forEach((devDep) => {
+        if (!devDeps.includes(devDep)) {
+          installing = devDep;
+          execSync(`npm i -D ${devDep}`);
+        }
+      });
+  }
+  catch (err) {
+    console.error(`installRequired: failed to install ${installing}: ${(err as Error).message}`);
+  }
+};
 
 const makeConfigDir = () => {
   try {
