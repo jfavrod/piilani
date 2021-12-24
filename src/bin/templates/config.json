@@ -17,7 +17,8 @@
             "host": "",
             "port": 0
         },
-        "level": "debug"
+        "level": "debug",
+        "noConsole": false
     },
     "services": {}
 }

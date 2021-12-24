@@ -48,6 +48,7 @@ export interface ILoggingConfig extends LoggerOptions {
         host: string;
         port: number;
     };
+    noConsole: boolean;
     level: LogLevel;
 }
 
