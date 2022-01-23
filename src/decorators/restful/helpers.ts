@@ -9,7 +9,6 @@ import {
 } from './types';
 
 export const getArgs = (parameters: Parameter[], pathParamLocations: number[], path: string, body: MessageBody): any[] => {
-    console.log(parameters, pathParamLocations);
     const returnArgs: any[] = [];
     const pathParts = splitPath(path);
     const pathParams = parameters.filter((param) => param.mapping === fromPathMetadataKey);

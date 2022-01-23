@@ -11,11 +11,11 @@ import {
     ParamType,
 } from './types'
 
-export function get(path: string): CallableFunction {
+export function get(path?: string): CallableFunction {
     return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
         const instance = ((target.constructor)() as RestController);
         const originalMethod = descriptor.value;
-        const parsedPath = parsePath(path);
+        const parsedPath = parsePath(instance.basePath + (path || ''));
         let method = (instance as unknown as Record<string, CallableFunction>)[propertyKey];
 
         // Make sure the method is bound to the instance when called.
