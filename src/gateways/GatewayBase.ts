@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ILogger } from '../context/interfaces';
-import { IGatewayResponse, ITableDataGateway } from './interfaces';
+import { IGatewayResponse, ITableDataGateway, ITypedGatewayResponse } from './interfaces';
 
 /**
  * @type {E} Entity for datasource operations.
- * @type {Q} Query object for key/value pair searches.
+ * @type {E} Query object for key/value pair searches.
  */
-export default class GatewayBase<E, Q> implements ITableDataGateway {
-    public readonly className = this.constructor.name;
+export default class GatewayBase<E, Q> implements ITableDataGateway<Q, E> {
     public readonly table: string;
     protected logger: ILogger;
 
@@ -15,35 +15,35 @@ export default class GatewayBase<E, Q> implements ITableDataGateway {
         this.logger = logger;
     }
 
-    delete(query: Q): IGatewayResponse<any> {
+    delete(query: Q): IGatewayResponse {
         throw new Error('Method not implemented.');
     }
 
-    deleteAsync(query: Q): Promise<IGatewayResponse<any>> {
+    deleteAsync(query: Q): Promise<IGatewayResponse> {
         throw new Error('Method not implemented.');
     }
 
-    find(query?: Q): IGatewayResponse<any> {
+    find(query?: Q): ITypedGatewayResponse<E> {
         throw new Error('Method not implemented.');
     }
 
-    findAsync(query?: Q): Promise<IGatewayResponse<any>> {
+    findAsync(query?: Q): Promise<ITypedGatewayResponse<E>> {
         throw new Error('Method not implemented.');
     }
 
-    insert(record: E): IGatewayResponse<any> {
+    insert(record: E): IGatewayResponse {
         throw new Error('Method not implemented.');
     }
 
-    insertAsync(record: E): Promise<IGatewayResponse<any>> {
+    insertAsync(record: E): Promise<IGatewayResponse> {
         throw new Error('Method not implemented.');
     }
 
-    update(record: E): IGatewayResponse<any> {
+    update(record: E): IGatewayResponse {
         throw new Error('Method not implemented.');
     }
 
-    updateAsync(record: E): Promise<IGatewayResponse<any>> {
+    updateAsync(record: E): Promise<IGatewayResponse> {
         throw new Error('Method not implemented.');
     }
 
@@ -51,7 +51,7 @@ export default class GatewayBase<E, Q> implements ITableDataGateway {
      * Get a default IGatewayResponse object.
      * @returns {IGatewayResponse} { class: 2, message: 'default response' }
      */
-    protected getDefaultResponse = (): IGatewayResponse<any> => {
+    protected getDefaultResponse = (): IGatewayResponse => {
         return {
             class: 2,
             message: 'default response',

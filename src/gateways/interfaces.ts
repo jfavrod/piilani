@@ -2,7 +2,7 @@
  * Common interfaces for Gateways classes (Gateways).
  */
 
-export interface IGatewayResponse<Data> {
+export interface IGatewayResponse {
     /**
      * Response classes:
      * 0) everything went A-Ok
@@ -10,19 +10,23 @@ export interface IGatewayResponse<Data> {
      * 2) method execution failed
      */
     class: number;
-    data?: Data[];
+    data?: unknown;
     message?: string;
 }
 
-export interface ITableDataGateway {
+export interface ITypedGatewayResponse<T> extends IGatewayResponse {
+    data: T[];
+}
+
+export interface ITableDataGateway<Query, Model> {
     /** The name of the table. */
     table: string;
-    delete(query: any): IGatewayResponse<unknown>;
-    deleteAsync(query: any): Promise<IGatewayResponse<unknown>>;
-    find(query?: any): IGatewayResponse<unknown>;
-    findAsync(query?: any): Promise<IGatewayResponse<unknown>>;
-    insert(record: any): IGatewayResponse<unknown>;
-    insertAsync(record: any): Promise<IGatewayResponse<unknown>>;
-    update(record?: any): IGatewayResponse<unknown>;
-    updateAsync(id: any, record?: any): Promise<IGatewayResponse<unknown>>;
+    delete(query: Query): IGatewayResponse;
+    deleteAsync(query: Query): Promise<IGatewayResponse>;
+    find(query?: Query): ITypedGatewayResponse<Model>;
+    findAsync(query?: Query): Promise<ITypedGatewayResponse<Model>>;
+    insert(record: Model): IGatewayResponse;
+    insertAsync(record: Model): Promise<IGatewayResponse>;
+    update(record?: Model): IGatewayResponse;
+    updateAsync(record?: Model): Promise<IGatewayResponse>;
 }
