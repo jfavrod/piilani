@@ -2,7 +2,21 @@
 import { IncomingMessage } from 'http';
 import { RestController } from '../controllers/http';
 import { InvalidValueError } from '../errors'; import { ServiceFactory } from '../factories'
-import { MetaData } from './MetaData';
+
+export class MetaData<T> {
+    public ref: T | null = null;
+    public store: {[key: string]: any} = {}
+
+    private refs: Map<string, T> = new Map();
+
+    public addRef(key: string, ref: T) {
+        this.refs.set(key, ref);
+    }
+
+    public getRef(name: string): T | undefined {
+        return this.refs.get(name);
+    }
+}
 
 type Constructor = { new (...args: any[]): any };
 type HttpMethod = 'GET' | 'POST';
@@ -10,7 +24,7 @@ type ParamType = 'number' | 'string';
 
 type ParamMetadata = {
     index: number;
-    mapping: Symbol,
+    mapping: symbol,
     paramName: string;
     type: ParamType | 'object';
     value?: unknown;
@@ -30,7 +44,7 @@ const registeredRouteMappings = [] as RouteMapping[];
 let restMetaData: MetaData<RestController>;
 
 /**
- * Parse the body from an IncommingMessage HTTP request.
+ * Parse the body from an IncomingMessage HTTP request.
  * @returns The body as either a JSON.parse object or a string.
  * Rejects on error, returning the error.
  */
@@ -69,13 +83,13 @@ const getBody = (req: IncomingMessage): Promise<unknown> => {
  */
 const mapRoute = (descriptor: PropertyDescriptor, method: HttpMethod,  propertyKey: string, route: string, target: RestController) => {
     const routeMapping = {} as RouteMapping
-    console.log('mapping route', propertyKey)
+    // console.log('mapping route', propertyKey)
 
     routeMapping.method = method;
 
     // Separate the route from the path parameters.
     routeMapping.route = route.replace(/^\/*/, '/').replace(/(\/\{\w+\})/g, '')
-    console.log('constructor ref', restMetaData.getRef(target.constructor.name))
+    // console.log('constructor ref', restMetaData.getRef(target.constructor.name))
     routeMapping.function = (args: any[]) => descriptor.value.call(restMetaData.getRef(target.constructor.name), ...args)
 
     routeMapping.params = [];
@@ -87,7 +101,7 @@ const mapRoute = (descriptor: PropertyDescriptor, method: HttpMethod,  propertyK
     // E.g. @fromBody mapping from HttpBody to method parameter.
     for (let i = 0; i < mappingDecorators.length; i++) {
         // The parameter mapping type (e.g. fromBody, fromPath).
-        const paramType: Symbol = mappingDecorators[i];
+        const paramType: symbol = mappingDecorators[i];
 
         parameterMetadata = Reflect.getOwnMetadata(paramType, target, propertyKey) || [];
 
@@ -297,6 +311,10 @@ export function get(route: string): CallableFunction {
         const originalMethod = descriptor.value;
 
         mapRoute(descriptor, 'GET', propertyKey, route, target);
+        // console.log('mapRoute', descriptor, 'GET', propertyKey, route, target)
+
+        console.log('inst', ((target.constructor)() as RestController).basePath)
+        console.log('method', (target as Record<string, any>)[propertyKey])
 
         descriptor.value = function(this: any, ...args: any[]) {
             return originalMethod.apply(this, args);
