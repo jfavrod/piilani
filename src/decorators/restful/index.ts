@@ -1,3 +1,6 @@
+/* eslint-disable */
+import 'reflect-metadata'
+
 import { RestController } from '../../controllers/http';
 import { parsePath } from './helpers'
 import { RouteRegistry } from './RouteRegistry';
@@ -14,6 +17,7 @@ import {
 export function get(path?: string): CallableFunction {
     return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
         const instance = ((target.constructor)() as RestController);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const originalMethod = descriptor.value;
         const parsedPath = parsePath(instance.basePath + (path || ''));
         let method = (instance as unknown as Record<string, CallableFunction>)[propertyKey];
@@ -22,6 +26,7 @@ export function get(path?: string): CallableFunction {
         method = method.bind(instance);
 
         const pathParams: Parameter[] = Reflect.getOwnMetadata(fromPathMetadataKey, target, propertyKey) || [];
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         pathParams.sort((a, b) => a.index - b.index);
 
         RouteRegistry.add({

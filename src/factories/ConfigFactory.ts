@@ -52,8 +52,9 @@ export default class ConfigFactory {
             defaultConfigValues =
                 JSON.parse(readFileSync(ConfigFactory.defaultConfigFile).toString()) as Partial<IConfigValues> || {};
         }
-        catch (err) {
-            console.error(`Failed to read default config file. ${(err as Error).message}`);
+        catch ({ message }) {
+            // eslint-disable-next-line no-console
+            console.error(`Failed to read default config file. ${message as string}`);
             process.exit(1);
         }
 
@@ -90,6 +91,7 @@ export default class ConfigFactory {
                 return new Config(config, Env.dev, ConfigFactory.configDir);
             }
             catch (err) {
+                // eslint-disable-next-line no-console
                 console.error(
                     `Failed to read dev config file (${ConfigFactory.devConfigFile}). ${(err as Error).message}`
                 );

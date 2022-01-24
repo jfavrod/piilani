@@ -1,4 +1,4 @@
-import appRoot from 'app-root-path'
+// import approot from 'app-root-path'
 import { injectable } from 'tsyringe'
 
 import { DBDriver, Env } from '../enums'
@@ -53,7 +53,7 @@ export default class Config implements IConfig {
             return (this.configValues.database as IMultiDatabaseVals)[db].toString();
         }
         else {
-            if (this.configValues.database?.driver === DBDriver.POSTGRES) {
+            if (this.configValues.database?.driver === DBDriver.postgres) {
                 const dbVals = this.configValues.database as IDatabaseVals;
                 connString = 'postgresql://';
                 connString += this.configValues.database.user;

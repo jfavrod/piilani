@@ -1,20 +1,22 @@
 {
   "name": "piilani",
-  "version": "0.1.0",
+  "version": "1.0.0-dev.2",
   "description": "Just another Web application framework.",
   "main": "dist/index.js",
   "bin": {
     "piilani": "bin/cli.js"
   },
   "scripts": {
-    "build": "npm run compile",
+    "build": "run-s lint compile:clean",
+    "clean": "rm -rf bin context controllers decorators errors factories gateways mappers services index.*",
     "compile": "tsc",
+    "compile:clean": "npm run clean && tsc",
     "lint": "eslint --ext .ts src/**",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Jason Favrod <mail@jasonfavrod.com>",
+  "license": "MIT",
   "devDependencies": {
     "@types/app-root-path": "^1.2.4",
     "@types/better-sqlite3": "^5.4.1",
@@ -24,11 +26,11 @@
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.14",
     "@types/pg": "^7.14.1",
-    "@typescript-eslint/eslint-plugin": "^4.11.1",
-    "@typescript-eslint/eslint-plugin-tslint": "^4.11.1",
-    "@typescript-eslint/parser": "^4.11.1",
-    "apidoc": "^0.19.0",
-    "autobind-decorator": "^2.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "app-root-path": "^3.0.0",
+    "commander": "^4.1.1",
     "eslint": "^7.17.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsdoc": "^30.7.13",
@@ -40,20 +42,8 @@
     "ts-mocha": "^8.0.0",
     "tslint": "^6.1.3",
     "tsyringe": "^4.6.0",
-    "typedoc": "^0.16.11",
-    "typedoc-plugin-external-module-name": "^3.0.0",
-    "typescript": "^3.9.2"
-  },
-  "dependencies": {
-    "@google-cloud/firestore": "^4.7.1",
-    "app-root-path": "^3.0.0",
-    "better-sqlite3": "^7.1.2",
-    "body-parser": "^1.19.0",
-    "case": "^1.6.2",
-    "commander": "^4.1.1",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "lodash": "^4.17.21",
-    "prompts": "^2.3.0"
+    "typescript": "^4.5.5",
+    "winston": "^3.4.0",
+    "winston-transport": "^4.4.2"
   }
 }

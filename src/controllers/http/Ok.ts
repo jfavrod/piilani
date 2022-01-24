@@ -1,14 +1,14 @@
-import Response from "./Response";
+import Response from './Response';
 
 export default class Ok extends Response {
-    private readonly _data?: Object;
+    private readonly _data?: Record<string, unknown>;
 
-    public constructor(obj?: Object) {
+    public constructor(obj?: Record<string, unknown>) {
         super();
         this._data = obj;
     }
 
-    public get data(): Object | undefined {
+    public get data(): Record<string, unknown> | undefined {
         return this._data;
     }
 }

@@ -19,6 +19,7 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
             const argv = getArgs(route.parameters, route?.pathParameterLocations, path, body);
 
             try {
+                // eslint-disable-next-line
                 const response = route.function(...argv);
                 if (response) {
                     res.statusCode = 200;
@@ -44,9 +45,9 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
             res.end();
         }
     })
-        .catch((err) => {
+        .catch(({ message }) => {
             res.statusCode = 500;
-            res.end(err.message);
+            res.end(message);
         })
 
 })

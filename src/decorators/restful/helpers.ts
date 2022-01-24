@@ -13,6 +13,9 @@ export const getArgs = (parameters: Parameter[], pathParamLocations: number[], p
     const pathParts = splitPath(path);
     const pathParams = parameters.filter((param) => param.mapping === fromPathMetadataKey);
 
+    // eslint-disable-next-line no-console
+    console.log('body unused', body);
+
     pathParamLocations.forEach((paramLocation, idx) => {
         returnArgs[pathParams[idx].index] = pathParts[paramLocation];
     })
@@ -30,12 +33,13 @@ export const getBody = (req: IncomingMessage): Promise<Record<string, unknown> |
         let data = '';
 
         req.on('data', (dt) => {
-            data += dt.toString()
+            data += JSON.stringify(dt)
         })
 
         req.on('end', () => {
             if (data) {
                 try {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                     const obj: Record<string, unknown> = JSON.parse(data);
                     if (obj) {
                         res(obj)
@@ -61,6 +65,7 @@ export const parsePath = (path: string): ParsedPath  => {
     let pathPattern = /^/;
 
     pathParts.forEach((part, index) => {
+        // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
         if (!part.match(pathParamPattern)) {
             pathPattern = new RegExp(pathPattern.source + '/' + part)
         } else {
@@ -79,7 +84,7 @@ export const getRegExpForPath = (path: string): RegExp => {
     const pathParamPattern = /\/{\w+}/g;
     const pathParamCount = path.match(pathParamPattern)?.length;
 
-    console.log(path.match(pathParamPattern));
+    // console.log(path.match(pathParamPattern));
 
     let pattern = new RegExp(path.replace(pathParamPattern, ''));
 

@@ -27,7 +27,7 @@ export default abstract class FactoryBase {
             this.cachedConfig = ConfigFactory.getInstance();
         }
 
-        return this.cachedConfig!;
+        return this.cachedConfig;
     }
 
     protected get logger(): ILogger {

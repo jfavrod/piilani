@@ -1,6 +1,6 @@
-import approot from 'app-root-path'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { execSync } from 'child_process'
+import approot from 'app-root-path'
 
 const configDir = `${approot.path}/config`;
 const defaultConfig = `${configDir}/config.json`;
@@ -44,9 +44,10 @@ const installRequired = () => {
   let installing = '';
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const pkgFile = JSON.parse(readFileSync(packageFile).toString());
-    const prodDeps: string[] = Object.keys(pkgFile.dependencies || {});
-    const devDeps: string[] = Object.keys(pkgFile.devDependencies || {});
+    const prodDeps: string[] = Object.keys((pkgFile as Record<string, string>).dependencies || {});
+    const devDeps: string[] = Object.keys((pkgFile as Record<string, string>).devDependencies || {});
 
       prodDependencies.forEach((prodDep) => {
         if (!prodDeps.includes(prodDep)) {
@@ -63,6 +64,7 @@ const installRequired = () => {
       });
   }
   catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`installRequired: failed to install ${installing}: ${(err as Error).message}`);
   }
 };
@@ -73,10 +75,12 @@ const makeConfigDir = () => {
       mkdirSync(configDir);
     }
     else {
+      // eslint-disable-next-line no-console
       console.warn(`Config directory (${configDir}) already exists.`);
     }
   }
   catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`makeConfig: ${(err as Error).message}`);
   }
 };
@@ -89,10 +93,12 @@ const makeDefaultConfig = () => {
       writeFileSync(defaultConfig, configTemplate);
     }
     else {
+      // eslint-disable-next-line no-console
       console.warn(`Default config (${defaultConfig}) already exists; leaving alone.`)
     }
   }
   catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`makeDefaultConfig: ${(err as Error).message}`);
   }
 }
@@ -106,9 +112,11 @@ const makeEnvConfigs = () => {
           writeFileSync(configPath, '{}');
         }
         else {
+          // eslint-disable-next-line no-console
           console.warn(`Config (${configPath}) already exists; leaving alone.`)
         }
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(`makeEnvConfigs: error on ${configFile}: ${(err as Error).message}`);
       }
     });
