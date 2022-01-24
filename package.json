@@ -1,6 +1,6 @@
 {
   "name": "piilani",
-  "version": "1.0.0-dev.2",
+  "version": "1.0.0-dev.3",
   "description": "Just another Web application framework.",
   "main": "dist/index.js",
   "bin": {
