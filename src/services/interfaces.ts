@@ -1,10 +1,10 @@
 export interface ICache {
     exists(key: string): boolean;
     existsAsync(key: string): Promise<boolean>;
-    get(key: string): any;
-    getAsync(key: string): Promise<any>;
-    set(key: string, entity: any): void;
-    setAsync(key: string, entity: any): Promise<void>;
+    get(key: string): unknown;
+    getAsync(key: string): Promise<unknown>;
+    set(key: string, entity: unknown): void;
+    setAsync(key: string, entity: unknown): Promise<void>;
 }
 
 /** An Identity and Access Management (IAM) service interface */
@@ -15,7 +15,9 @@ export interface IIAMService {
      */
     resources: string;
     /** Get a token to access some resource. */
-    getAccessToken(...params: any): any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getAccessToken(...params: any): unknown;
     /** Use to require authentication to some resource (e.g. an endpoint). */
-    requireAuthentication(...params: any): any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    requireAuthentication(...params: any): unknown;
 }

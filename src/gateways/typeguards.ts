@@ -1,4 +1,4 @@
-import { IGatewayResponse } from './interfaces';
+import { IGatewayResponse } from './interfaces'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const isIGatewayResponse = (obj: object): obj is IGatewayResponse => (
@@ -7,4 +7,4 @@ export const isIGatewayResponse = (obj: object): obj is IGatewayResponse => (
         'data' in obj
         || 'message' in obj
     )
-);
+)

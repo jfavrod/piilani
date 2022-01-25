@@ -1,7 +1,7 @@
 export {
     DBDriver,
     Env,
-} from './enums';
+} from './enums'
 
 export {
     IConfigValues,
@@ -11,14 +11,8 @@ export {
     ILoggingConfig,
     IMultiDatabaseVals,
     IService,
-} from './interfaces';
+} from './interfaces'
 
 export {
     IConfig,
-    isIConfig,
-} from './Config';
-
-export {
-    isILogger,
-    isIService,
-} from './typegaurds';
+} from './Config'

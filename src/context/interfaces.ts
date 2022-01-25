@@ -3,11 +3,11 @@
  * @module Context
  */
 
-import { LoggerOptions } from 'winston';
-import { DBDriver } from '.';
+import { LoggerOptions } from 'winston'
+import { DBDriver } from '.'
 
 export interface IConfigValues {
-    [index: string]: any;
+    [index: string]: unknown;
     /** Supported Drivers: postgres (pg/node-postgres) */
     database?: IDatabaseVals | IMultiDatabaseVals;
     listenPort?: number;
@@ -57,7 +57,7 @@ export interface IMultiDatabaseVals {
 }
 
 export interface IService {
-    [index: string]: any;
+    [index: string]: unknown;
     cert?: string;
     clientId?: string;
     clientSecret?: string;
