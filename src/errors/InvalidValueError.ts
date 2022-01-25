@@ -8,9 +8,9 @@
  * (falling out of bounds, wrong type, etc.).
  */
 export default class InvalidValueError extends Error {
-    public readonly name = 'InvalidValueError'
+  public readonly name = 'InvalidValueError';
 
-    public constructor(mesg?: string) {
-        super(mesg)
-    }
+  public constructor(mesg?: string) {
+    super(mesg);
+  }
 }

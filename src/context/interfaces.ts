@@ -3,8 +3,8 @@
  * @module Context
  */
 
-import { LoggerOptions } from 'winston'
-import { DBDriver } from '.'
+import { LoggerOptions } from 'winston';
+import { DBDriver } from '.';
 
 export interface IConfigValues {
     [index: string]: unknown;

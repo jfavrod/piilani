@@ -16,6 +16,6 @@
  * @preferred
  */
 
-export { default as ConfigFactory } from './ConfigFactory'
-export { default as LoggerFactory } from './LoggerFactory'
-export { default as ServiceFactory } from './ServiceFactory'
+export { default as ConfigFactory } from './ConfigFactory';
+export { default as LoggerFactory } from './LoggerFactory';
+export { default as ServiceFactory } from './ServiceFactory';

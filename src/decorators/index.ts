@@ -1,1 +1,1 @@
-export * as restful from './restful'
+export * as restful from './restful';

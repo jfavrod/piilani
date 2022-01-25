@@ -8,9 +8,9 @@
  * reasons other than invalid arguments.
  */
 export default class InvalidOperationError extends Error {
-    public readonly name = 'InvalidOperationError'
+  public readonly name = 'InvalidOperationError';
 
-    public constructor(mesg?: string) {
-        super(mesg)
-    }
+  public constructor(mesg?: string) {
+    super(mesg);
+  }
 }

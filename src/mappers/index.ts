@@ -1,1 +1,1 @@
-export { DtoEntityMapper } from './DtoEntityMapper'
+export { DtoEntityMapper } from './DtoEntityMapper';

@@ -1,5 +1,5 @@
-export const fromBodyMetadataKey = Symbol('fromBody')
-export const fromPathMetadataKey = Symbol('fromPath')
+export const fromBodyMetadataKey = Symbol('fromBody');
+export const fromPathMetadataKey = Symbol('fromPath');
 
 export type MessageBody = string | Record<string, unknown>;
 

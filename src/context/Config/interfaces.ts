@@ -3,13 +3,13 @@
  * @module Context
  */
 
-import { Env } from '../enums'
+import { Env } from '../enums';
 
 import {
-    IDatabaseVals,
-    ILoggingConfig,
-    IMultiDatabaseVals,
-} from '../interfaces'
+  IDatabaseVals,
+  ILoggingConfig,
+  IMultiDatabaseVals,
+} from '../interfaces';
 
 export interface IConfig {
     /** Get absolute path to the config directory. */

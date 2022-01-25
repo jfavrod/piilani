@@ -1,1 +1,1 @@
-export { RestController } from './RestController'
+export { RestController } from './RestController';

@@ -1,6 +1,6 @@
-export { default } from './Config'
-export { default as Config } from './Config'
+export { default } from './Config';
+export { default as Config } from './Config';
 
 export {
-    IConfig,
-} from './interfaces'
+  IConfig,
+} from './interfaces';

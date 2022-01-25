@@ -17,8 +17,8 @@
     ],
     "rules": {
         "indent": [
-            "error",
-            4
+            "warn",
+            2
         ],
         "linebreak-style": [
             "error",
@@ -30,7 +30,7 @@
         ],
         "semi": [
             "error",
-            "never"
+            "always"
         ]
     }
 }
