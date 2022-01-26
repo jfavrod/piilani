@@ -14,5 +14,6 @@ export {
 } from './interfaces';
 
 export {
+  Config,
   IConfig,
 } from './Config';
