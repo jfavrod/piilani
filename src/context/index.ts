@@ -6,7 +6,7 @@ export {
 export {
   IConfigValues,
   IDatabaseSSL,
-  IDatabaseVals,
+  IDatabaseValues,
   ILogger,
   ILoggingConfig,
   IMultiDatabaseVals,

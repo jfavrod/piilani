@@ -14,13 +14,13 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
   }
 
 
-  getBody(req).then((body) => {
+  getBody(req).then(async (body) => {
     if (route) {
       const argv = getArgs(route.parameters, route?.pathParameterLocations, path, body);
 
       try {
-        // eslint-disable-next-line
-                const response = route.function(...argv);
+        const response = await route.function(...argv);
+
         if (response) {
           res.statusCode = 200;
 

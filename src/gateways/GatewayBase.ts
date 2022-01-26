@@ -3,10 +3,10 @@ import { ILogger } from '../context/interfaces';
 import { IGatewayResponse, ITableDataGateway, ITypedGatewayResponse } from './interfaces';
 
 /**
+ * @type {Q} Query object for key/value pair searches.
  * @type {E} Entity for datasource operations.
- * @type {E} Query object for key/value pair searches.
  */
-export default class GatewayBase<E, Q> implements ITableDataGateway<Q, E> {
+export default class GatewayBase<Q, E> implements ITableDataGateway<Q, E> {
   public readonly table: string;
   protected logger: ILogger;
 

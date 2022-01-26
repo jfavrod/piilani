@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import { RestController } from '../../controllers/http';
+import { RefStore } from '../../controllers/http/RefStore';
 import { parsePath } from './helpers';
 import { RouteRegistry } from './RouteRegistry';
 
@@ -13,37 +14,6 @@ import {
   ParamType,
 } from './types';
 
-export function get(path?: string): CallableFunction {
-  return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
-    const instance = ((target.constructor)() as RestController);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const originalMethod = descriptor.value;
-    const parsedPath = parsePath(instance.basePath + (path || ''));
-    let method = (instance as unknown as Record<string, CallableFunction>)[propertyKey];
-
-    // Make sure the method is bound to the instance when called.
-    method = method.bind(instance);
-
-    const pathParams: Parameter[] = Reflect.getOwnMetadata(fromPathMetadataKey, target, propertyKey) || [];
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    pathParams.sort((a, b) => a.index - b.index);
-
-    RouteRegistry.add({
-      function: method,
-      method: 'GET',
-      path: parsedPath.pathPattern,
-      parameters: pathParams,
-      pathParameterLocations: parsedPath.pathParamLocations,
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    descriptor.value = function(this: any, ...args: any[]) {
-      return originalMethod.apply(this, args);
-    };
-
-    return descriptor;
-  };
-}
 
 export function fromBody(param: string) {
   return function(target: RestController, propertyKey: string | symbol, parameterIndex: number): void {
@@ -74,5 +44,32 @@ export function fromPath(param: string, type?: ParamType) {
     });
 
     Reflect.defineMetadata(fromPathMetadataKey, existingPathParams, target, propertyKey);
+  };
+}
+
+export function get(path?: string): CallableFunction {
+  return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+    const originalMethod = descriptor.value;
+    const parsedPath = parsePath(target.basePath + (path || ''));
+    const method = (target as unknown as Record<string, () => unknown>)[propertyKey];
+
+    const pathParams: Parameter[] = Reflect.getOwnMetadata(fromPathMetadataKey, target, propertyKey) || [];
+    pathParams.sort((a, b) => a.index - b.index);
+
+    RouteRegistry.add({
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      function: () => method.apply(RefStore.getRef(target.constructor.name)!),
+      method: 'GET',
+      path: parsedPath.pathPattern,
+      parameters: pathParams,
+      pathParameterLocations: parsedPath.pathParamLocations,
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    descriptor.value = function(this: any, ...args: any[]) {
+      return originalMethod.apply(this, args);
+    };
+
+    return descriptor;
   };
 }

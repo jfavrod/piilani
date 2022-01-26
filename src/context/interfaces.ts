@@ -9,7 +9,7 @@ import { DBDriver } from '.';
 export interface IConfigValues {
     [index: string]: unknown;
     /** Supported Drivers: postgres (pg/node-postgres) */
-    database?: IDatabaseVals | IMultiDatabaseVals;
+    database?: IDatabaseValues | IMultiDatabaseVals;
     listenPort?: number;
     logging: ILoggingConfig;
     services?: { [key: string]: IService };
@@ -24,7 +24,7 @@ export interface IDatabaseSSL {
     key?: string;
 }
 
-export interface IDatabaseVals {
+export interface IDatabaseValues {
     driver: DBDriver;
     host: string;
     name: string;
@@ -53,7 +53,7 @@ export interface ILoggingConfig extends LoggerOptions {
 }
 
 export interface IMultiDatabaseVals {
-    [key: string]: IDatabaseVals;
+    [key: string]: IDatabaseValues;
 }
 
 export interface IService {

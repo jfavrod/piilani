@@ -1,6 +1,9 @@
 export const fromBodyMetadataKey = Symbol('fromBody');
 export const fromPathMetadataKey = Symbol('fromPath');
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Constructor = { new (...args: any[]): unknown };
+
 export type MessageBody = string | Record<string, unknown>;
 
 export type Parameter = {

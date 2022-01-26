@@ -5,7 +5,7 @@ import { DBDriver, Env } from '../enums';
 
 import {
   IConfigValues,
-  IDatabaseVals,
+  IDatabaseValues,
   ILoggingConfig,
   IMultiDatabaseVals,
   IService,
@@ -20,12 +20,12 @@ export default class Config implements IConfig {
   private env: Env;
 
   /**
-     * @param configValues Values used to configure this application.
-     * Should be a JSON file in the configDir.
-     * @param env The Env this application is running in.
-     * @param configDir The absolute path to the config directory - the
-     * directory where the config is stored.
-     */
+   * @param configValues Values used to configure this application.
+   * Should be a JSON file in the configDir.
+   * @param env The Env this application is running in.
+   * @param configDir The absolute path to the config directory - the
+   * directory where the config is stored.
+   */
   public constructor(configValues: IConfigValues, env: Env, configDir: string) {
     this.configDir = configDir;
     this.configValues = configValues;
@@ -47,52 +47,57 @@ export default class Config implements IConfig {
   }
 
   public getConnectionString(db?: string): string {
-    let connString: string;
+    let connString = '';
+    let dbVals: IDatabaseValues;
 
     if (db) {
-      return (this.configValues.database as IMultiDatabaseVals)[db].toString();
+      dbVals = (this.configValues.database as IMultiDatabaseVals)[db];
     }
     else {
-      if (this.configValues.database?.driver === DBDriver.postgres) {
-        const dbVals = this.configValues.database as IDatabaseVals;
-        connString = 'postgresql://';
-        connString += this.configValues.database.user;
-        connString += `: ${dbVals.password}`;
-        connString += `@ ${dbVals.host}`;
-        connString += `: ${dbVals.port}`;
-        connString += `/ ${dbVals.name}`;
-        return connString;
-      }
-
-      return (this.configValues.database as IDatabaseVals).toString();
+      dbVals = this.configValues.database as IDatabaseValues;
     }
+
+    switch (this.configValues.database?.driver) {
+      case DBDriver.mongodb:
+        connString = this.getMongoString(dbVals);
+        break;
+      case DBDriver.postgres:
+        connString = this.getPostgresString(dbVals);
+        break;
+    }
+
+    if (this.configValues.database?.driver === DBDriver.postgres) {
+      connString = this.getPostgresString(dbVals);
+    }
+
+    return connString;
   }
 
   /**
-     * Get a copy of the database configuration.
-     */
-  public getDatabaseConfig(): IDatabaseVals | IMultiDatabaseVals {
+   * Get a copy of the database configuration.
+   */
+  public getDatabaseConfig(): IDatabaseValues | IMultiDatabaseVals {
     return Object.assign({}, this.configValues.database);
   }
 
   /**
-     * Get the currently running Env.
-     */
+   * Get the currently running Env.
+   */
   public getEnv(): Env {
     return this.env;
   }
 
   /**
-     * If running as a service, the port the service is supposed to
-     * listen on.
-     */
+   * If running as a service, the port the service is supposed to
+   * listen on.
+   */
   public getListenPort(): number | undefined {
     return this.configValues.listenPort || 3000;
   }
 
   /**
-     * Get a copy of the logging configuration.
-     */
+   * Get a copy of the logging configuration.
+   */
   public getLoggingConfig(): ILoggingConfig {
     return Object.assign({}, this.configValues.logging);
   }
@@ -104,8 +109,8 @@ export default class Config implements IConfig {
   }
 
   /**
-     * Retrieve a list of the configured services.
-     */
+   * Retrieve a list of the configured services.
+   */
   public getServiceList(): string[] {
     const services: string[] = [];
 
@@ -128,5 +133,27 @@ export default class Config implements IConfig {
 
   public toString(): string {
     return JSON.stringify(this.configValues, null, 2);
+  }
+
+  private getMongoString(values: IDatabaseValues): string {
+    let connString = 'mongodb+srv://';
+    connString += values.user;
+    connString += `:${values.password}`;
+    connString += `@${values.host}`;
+    return connString;
+  }
+
+  /**
+   * @param values
+   * @returns
+   */
+  private getPostgresString(values: IDatabaseValues): string {
+    let connString = 'postgresql://';
+    connString += values.user;
+    connString += `:${values.password}`;
+    connString += `@${values.host}`;
+    connString += `:${values.port}`;
+    connString += `/${values.name}`;
+    return connString;
   }
 }

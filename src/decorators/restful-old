@@ -4,18 +4,18 @@ import { RestController } from '../controllers/http';
 import { InvalidValueError } from '../errors'; import { ServiceFactory } from '../factories'
 
 export class MetaData<T> {
-    public ref: T | null = null;
-    public store: {[key: string]: any} = {}
+  public ref: T | null = null;
+  public store: {[key: string]: any} = {}
 
-    private refs: Map<string, T> = new Map();
+  private refs: Map<string, T> = new Map();
 
-    public addRef(key: string, ref: T) {
-        this.refs.set(key, ref);
-    }
+  public addRef(key: string, ref: T) {
+    this.refs.set(key, ref);
+  }
 
-    public getRef(name: string): T | undefined {
-        return this.refs.get(name);
-    }
+  public getRef(name: string): T | undefined {
+    return this.refs.get(name);
+  }
 }
 
 type Constructor = { new (...args: any[]): any };

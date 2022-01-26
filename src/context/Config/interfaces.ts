@@ -6,9 +6,9 @@
 import { Env } from '../enums';
 
 import {
-  IDatabaseVals,
+  IDatabaseValues,
   ILoggingConfig,
-  IMultiDatabaseVals,
+  IMultiDatabaseVals as IMultiDatabaseValues,
 } from '../interfaces';
 
 export interface IConfig {
@@ -21,7 +21,7 @@ export interface IConfig {
      */
     getConnectionString(db?: string): string;
 
-    getDatabaseConfig(): IDatabaseVals | IMultiDatabaseVals | undefined;
+    getDatabaseConfig(): IDatabaseValues | IMultiDatabaseValues | undefined;
     getEnv(): Env;
     getListenPort(): number | undefined;
     getLoggingConfig(): ILoggingConfig | undefined;
