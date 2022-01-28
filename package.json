@@ -2,15 +2,28 @@
   "name": "piilani",
   "version": "1.0.0-dev.3",
   "description": "Just another Web application framework.",
-  "main": "dist/index.js",
-  "bin": {
-    "piilani": "bin/cli.js"
+  "directories": {
+    "bin": "./bin"
   },
+  "files": [
+    "./context",
+    "./controllers",
+    "./decorators",
+    "./errors",
+    "./factories",
+    "./gateways",
+    "./mappers",
+    "./services"
+  ],
   "scripts": {
-    "build": "run-s lint compile:clean",
-    "clean": "rm -rf bin context controllers decorators errors factories gateways mappers services index.*",
-    "compile": "tsc",
+    "build": "run-s lint compile:clean compile:cli cli:exec cli:templates",
+    "build:cli": "run-s clean:cli compile:cli",
+    "clean": "rm -rf bin/ context/ controllers/ decorators/ errors/ factories/ gateways/ mappers/ services/",
+    "cli:exec": "mv bin/cli.js bin/cli && chmod +x bin/cli",
+    "cli:templates": "cp -r src/bin/templates bin/",
+    "compile": "tsc -p ./tsconfig.js",
     "compile:clean": "npm run clean && tsc",
+    "compile:cli": "cd src/bin && tsc -p ./tsconfig.json",
     "lint": "eslint --ext .ts src/**",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

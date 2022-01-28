@@ -1,7 +1,9 @@
 node_modules/
 src/
 test/
-.eslintrc.js
+.eslintrc.json
+.npmignore
 .git/
 .gitignore
+package-lock.json
 tsconfig.json

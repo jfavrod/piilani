@@ -4,7 +4,7 @@ import { ILogger } from '../context';
 import GatewayBase from './GatewayBase';
 import { IMongoGatewayConfig } from './IMongoGatewayConfig';
 
-export class MongoGateway<Query, Entity> extends GatewayBase<Query, Entity> {
+export abstract class MongoGateway<Query, Entity> extends GatewayBase<Query, Entity> {
   protected client: MongoClient;
   protected config: IMongoGatewayConfig;
 

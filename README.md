@@ -74,6 +74,16 @@ class ListController extends RestController {
 
 ### Handling HTTP Requests
 
+```TypeScript
+class ListController extends RestController {
+    @get()
+    public async getAllLists(): Promise<List[]> {
+        const res = await this.gateway!.findAsync();
+        return res.data;
+    }
+}
+```
+
 ### Handling Path Parameters
 
 ### Handling Query Parameters

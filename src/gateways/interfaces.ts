@@ -5,17 +5,17 @@
 export interface IGatewayResponse {
     /**
      * Response classes:
-     * 0) everything went A-Ok
-     * 1) method executed successfully, but did not produce intended outcome
-     * 2) method execution failed
+     * 1) everything went A-Ok
+     * 2) method executed successfully, but did not produce intended outcome
+     * 3) method execution failed
      */
-    class: number;
+    class: 1 | 2 | 3;
     data?: unknown;
     message?: string;
 }
 
 export interface ITypedGatewayResponse<T> extends IGatewayResponse {
-    data: T[];
+    data?: T[];
 }
 
 export interface ITableDataGateway<Query, Model> {
