@@ -1,20 +1,10 @@
 {
   "name": "piilani",
-  "version": "1.0.0-dev.3",
+  "version": "1.0.0-dev.5",
   "description": "Just another Web application framework.",
   "directories": {
     "bin": "./bin"
   },
-  "files": [
-    "./context",
-    "./controllers",
-    "./decorators",
-    "./errors",
-    "./factories",
-    "./gateways",
-    "./mappers",
-    "./services"
-  ],
   "scripts": {
     "build": "run-s lint compile:clean compile:cli cli:exec cli:templates",
     "build:cli": "run-s clean:cli compile:cli",

@@ -2,7 +2,6 @@ node_modules/
 src/
 test/
 .eslintrc.json
-.npmignore
 .git/
 .gitignore
 package-lock.json
