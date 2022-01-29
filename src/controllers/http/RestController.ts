@@ -13,7 +13,7 @@ export class RestController extends BaseController {
     return this._basePath;
   }
 
-  protected setBasePath(path: string): void {
+  protected set basePath(path: string) {
     this._basePath = path;
   }
 }
