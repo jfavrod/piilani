@@ -76,6 +76,8 @@ export const parsePath = (path: string): ParsedPath  => {
     }
   });
 
+  pathPattern = new RegExp(pathPattern.source + /$/.source);
+
   return {
     pathPattern,
     pathParamLocations,
