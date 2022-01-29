@@ -10,9 +10,8 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
   // let parameters: any[] = [];
 
   if (req.method?.toUpperCase() === 'GET') {
-    route = RouteRegistry.findGet(req.url || '');
+    route = RouteRegistry.findGet(path);
   }
-
 
   getBody(req).then(async (body) => {
     if (route) {
