@@ -49,8 +49,9 @@ export function fromPath(param: string, type?: ParamType) {
 
 export function get(path?: string): CallableFunction {
   return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+    const instance = target.constructor() as RestController;
     const originalMethod = descriptor.value;
-    const parsedPath = parsePath(target.basePath + (path || ''));
+    const parsedPath = parsePath(instance.basePath + (path || ''));
     const method = (target as unknown as Record<string, () => unknown>)[propertyKey];
 
     const pathParams: Parameter[] = Reflect.getOwnMetadata(fromPathMetadataKey, target, propertyKey) || [];
