@@ -23,12 +23,27 @@ Getting Started
 ---------------
 
 ### Installation
+Add Piilani to your project.
+
+#### NPM
+```
+npm i piilani
+```
+
+#### Yarn
+```
+yarn add piilani
+```
 
 To initialize your project directory run the following Piilani command:
-{{/path/to/binary}} init
 
-This will create a `config` directory and config files for each supported
-environment.
+```
+./node_modules/piilani/bin/cli init
+```
+
+
+This will install all required dependencies and create a `config`
+directory with config files for each supported environment.
 
 ### Environment
 There are 3 runtime environments and the `PIILANI_ENV` environment variable to
