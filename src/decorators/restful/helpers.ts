@@ -1,4 +1,5 @@
 import { IncomingMessage } from 'http';
+import { URL } from 'url';
 
 import {
   // fromBodyMetadataKey,
@@ -6,21 +7,27 @@ import {
   MessageBody,
   ParsedPath,
   Parameter,
+  fromQueryMetadataKey,
 } from './types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getArgs = (parameters: Parameter[], pathParamLocations: number[], path: string, body: MessageBody): any[] => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const returnArgs: any[] = [];
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getArgs = (parameters: Parameter[], pathParamLocations: number[], path: string, body: MessageBody): unknown[] => {
+  const returnArgs: unknown[] = [];
   const pathParts = splitPath(path);
   const pathParams = parameters.filter((param) => param.mapping === fromPathMetadataKey);
-
-  // eslint-disable-next-line no-console
-  console.log('body unused', body);
+  const queryParams = parameters.filter((param) => param.mapping === fromQueryMetadataKey);
 
   pathParamLocations.forEach((paramLocation, idx) => {
     returnArgs[pathParams[idx].index] = pathParts[paramLocation];
   });
+
+
+  if (queryParams.length) {
+    const searchParams = new URL('http://test.me' + path).searchParams;
+    queryParams.forEach((param) => {
+      returnArgs[param.index] = searchParams.get(param.paramName);
+    });
+  }
 
   return returnArgs;
 };
@@ -67,7 +74,6 @@ export const parsePath = (path: string): ParsedPath  => {
   let pathPattern = /^/;
 
   pathParts.forEach((part, index) => {
-    // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
     if (!part.match(pathParamPattern)) {
       pathPattern = new RegExp(pathPattern.source + '/' + part);
     } else {

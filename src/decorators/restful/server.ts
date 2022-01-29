@@ -1,3 +1,4 @@
+import { RefStore } from '../../controllers/http/RefStore';
 import { ServiceFactory } from '../../factories';
 
 import { getArgs, getBody, normalizePath } from './helpers';
@@ -7,7 +8,6 @@ import { Route } from './types';
 ServiceFactory.getHttpServer().on('request', (req, res) => {
   const path = normalizePath(req.url || '');
   let route: Route | undefined;
-  // let parameters: any[] = [];
 
   if (req.method?.toUpperCase() === 'GET') {
     route = RouteRegistry.findGet(path);
@@ -18,7 +18,7 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
       const argv = getArgs(route.parameters, route?.pathParameterLocations, path, body);
 
       try {
-        const response = await route.function(...argv);
+        const response = await route.function.call(RefStore.getRef(route.constructor), ...argv);
 
         if (response) {
           res.statusCode = 200;
