@@ -7,6 +7,7 @@ import { IGatewayResponse, ITableDataGateway, ITypedGatewayResponse } from './in
  * @type {E} Entity for datasource operations.
  */
 export default class GatewayBase<Q, E> implements ITableDataGateway<Q, E> {
+  public readonly className = this.constructor.name;
   public readonly table: string;
   protected logger: ILogger;
 

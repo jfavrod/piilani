@@ -63,19 +63,54 @@ certain convenience functions (like the `getConnectionString` method of the
 
 
 ### Rest Controllers
-The base of a RESTful Web service is the RestController. The Controller
-is a class that extends the RestController base class.
+The base of a RESTful Web service is the RestController.
 
 ```TypeScript
+import { RestController } from 'piilani/controllers/http';
+import { injectable } from 'tsyringe';
+
+@injectable()
 class ListController extends RestController {
     // Class definition here...
 }
 ```
 
-### Handling HTTP Requests
+This controller is now primed to handle incoming HTTP requests. Without
+specifying a `basePath`, the controller will handle routes with paths
+starting from the root `/`. Alternatively, the `basePath` can be set in
+the constructor.
 
 ```TypeScript
+@injectable()
 class ListController extends RestController {
+    private gateway: IListsGateway;
+
+    public constructor(@inject('IListsGateway')gateway: IListsGateway) {
+        super()
+        this.gateway = gateway;
+        this.basePath = '/lists';
+    }
+}
+```
+
+Now all route paths handled by this controller will begin with
+`/lists`.
+
+
+### Handling HTTP Requests
+To handle HTTP requests, use the `get`, `post`, `put`, and `delete`
+decorators.
+
+The following method, annotated with the `@get()` decorator, will
+handle get requests to the controller's base path (`/` by default, see
+the **RestController** section for details on how to set base path).
+
+```TypeScript
+import { get } from 'piilani/decorators/restful';
+
+class ListController extends RestController {
+    // code omitted.
+
     @get()
     public async getAllLists(): Promise<List[]> {
         const res = await this.gateway!.findAsync();
@@ -83,6 +118,24 @@ class ListController extends RestController {
     }
 }
 ```
+
+If you want the annotated methods to handle more specific routes, add
+the path (relative to the RestController's basePath) to the decorator's
+invocation.
+
+```TypeScript
+@injectable()
+export class ListsController extends RestController {
+    // code omitted.
+
+    @get('/index')
+    public async getListIndex(): Promise<ListIndex[]> {
+        const res = await this.gateway!.findIndexAsync();
+        return res.data || [];
+    }
+}
+```
+
 
 ### Handling Path Parameters
 
