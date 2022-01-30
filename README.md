@@ -81,8 +81,8 @@ certain convenience functions (like the `getConnectionString` method of the
 The base of a RESTful Web service is the RestController.
 
 ```TypeScript
+import { injectable } from 'piilani/context';
 import { RestController } from 'piilani/controllers/http';
-import { injectable } from 'tsyringe';
 
 @injectable()
 class ListController extends RestController {
@@ -96,6 +96,8 @@ starting from the root `/`. Alternatively, the `basePath` can be set in
 the constructor.
 
 ```TypeScript
+import { inject, injectable } from 'piilani/context';
+
 @injectable()
 class ListController extends RestController {
     private gateway: IListsGateway;
