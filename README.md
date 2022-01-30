@@ -123,6 +123,7 @@ handle get requests to the controller's base path (`/` by default, see
 the **RestController** section for details on how to set base path).
 
 ```TypeScript
+import { HttpResponse, NoContent, Ok, ServerError } from 'piilani/controllers/http/response';
 import { get } from 'piilani/decorators/restful';
 
 @injectable()
@@ -130,9 +131,16 @@ class ListController extends RestController {
     // code omitted.
 
     @get()
-    public async getAllLists(): Promise<List[]> {
-        const res = await this.gateway.findAsync();
-        return res.data;
+    public async getAllLists(): Promise<HttpResponse<List[]>> {
+      const res = await this.gateway.findAsync();
+      if (res.data) {
+        return Ok(res.data);
+      }
+      if (res.class === 2) {
+        return NoContent();
+      }
+
+      return ServerError();
     }
 }
 ```
@@ -147,9 +155,17 @@ export class ListsController extends RestController {
     // code omitted.
 
     @get('/index')
-    public async getListIndex(): Promise<ListIndex[]> {
-        const res = await this.gateway.findIndexAsync();
-        return res.data || [];
+    public async getListIndex(): Promise<HttpResponse<ListIndex[]>> {
+      const res = await this.gateway.findIndexAsync();
+
+      if (res.data) {
+        return Ok(res.data);
+      }
+      if (res.class === 2) {
+        return NoContent();
+      }
+
+      return ServerError();
     }
 }
 ```
@@ -169,9 +185,17 @@ export class ListsController extends RestController {
     // code omitted.
 
     @post()
-    public async addList(@fromBody()list: List): Promise<boolean> {
-      const res = await this.gateway.insertAsync(list);
-      return (res?.class === 1);
+    public async addList(@fromBody()list: Partial<Omit<List, 'id'>>): Promise<HttpResponse> {
+      const res = await this.gateway.insertAsync(new List(list));
+
+      if (res.class === 1) {
+        return Created();
+      }
+      if (res.class === 2) {
+        return BadRequest();
+      }
+
+      return ServerError();
     }
 }
 ```
