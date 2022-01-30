@@ -1,3 +1,6 @@
+
+export { container as DependencyInjection, inject, injectable } from 'tsyringe';
+
 export {
   DBDriver,
   Env,
