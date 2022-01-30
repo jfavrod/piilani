@@ -1,10 +1,11 @@
-import Response from './Response';
+import Response from './HttpResponse';
+import HttpStatusCode from './HttpStatusCode';
 
-export default class Ok extends Response {
+export class BadRequest extends Response {
   private readonly _data?: Record<string, unknown>;
 
   public constructor(obj?: Record<string, unknown>) {
-    super();
+    super(HttpStatusCode.BAD_REQUEST);
     this._data = obj;
   }
 
@@ -12,3 +13,5 @@ export default class Ok extends Response {
     return this._data;
   }
 }
+
+export default BadRequest;

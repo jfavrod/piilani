@@ -129,7 +129,7 @@ class ListController extends RestController {
 
     @get()
     public async getAllLists(): Promise<List[]> {
-        const res = await this.gateway!.findAsync();
+        const res = await this.gateway.findAsync();
         return res.data;
     }
 }
@@ -146,7 +146,7 @@ export class ListsController extends RestController {
 
     @get('/index')
     public async getListIndex(): Promise<ListIndex[]> {
-        const res = await this.gateway!.findIndexAsync();
+        const res = await this.gateway.findIndexAsync();
         return res.data || [];
     }
 }
@@ -168,7 +168,7 @@ export class ListsController extends RestController {
 
     @post()
     public async addList(@fromBody()list: List): Promise<boolean> {
-      const res = await this.gateway?.insertAsync(list);
+      const res = await this.gateway.insertAsync(list);
       return (res?.class === 1);
     }
 }

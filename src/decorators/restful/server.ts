@@ -1,4 +1,5 @@
 import { RefStore } from '../../controllers/http/RefStore';
+import { HttpResponse } from '../../controllers/http/response';
 import { ServiceFactory } from '../../factories';
 
 import { getArgs, getBody, normalizePath } from './helpers';
@@ -26,7 +27,12 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
         const response = await route.function.call(RefStore.getRef(route.constructor), ...argv);
 
         if (response) {
-          res.statusCode = 200;
+          if (response instanceof HttpResponse) {
+            res.statusCode = response.statusCode;
+          }
+          else {
+            res.statusCode = 200;
+          }
 
           if (typeof response === 'object') {
             res.setHeader('content-type', 'application/json');
