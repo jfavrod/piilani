@@ -1,5 +1,6 @@
 export const fromBodyMetadataKey = Symbol('fromBody');
 export const fromPathMetadataKey = Symbol('fromPath');
+export const fromQueryMetadataKey = Symbol('fromQuery');
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Constructor = { new (...args: any[]): unknown };
@@ -24,7 +25,8 @@ export type ParsedPath = {
 }
 
 export type Route = {
-  function: CallableFunction;
+  constructor: string;
+  function: (...params: unknown[]) => unknown;
   method: 'GET' | 'POST';
   path: RegExp;
   parameters: Parameter[];
