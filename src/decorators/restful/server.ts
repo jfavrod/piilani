@@ -12,10 +12,15 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
   if (req.method?.toUpperCase() === 'GET') {
     route = RouteRegistry.findGet(path);
   }
+  else if (req.method?.toUpperCase() === 'POST') {
+    route = RouteRegistry.findPost(path);
+    // console.log('route', route);
+  }
 
   getBody(req).then(async (body) => {
     if (route) {
       const argv = getArgs(route.parameters, route?.pathParameterLocations, path, body);
+      // console.log('argv', argv);
 
       try {
         const response = await route.function.call(RefStore.getRef(route.constructor), ...argv);

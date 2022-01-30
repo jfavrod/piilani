@@ -2,25 +2,30 @@ import { IncomingMessage } from 'http';
 import { URL } from 'url';
 
 import {
-  // fromBodyMetadataKey,
+  fromBodyMetadataKey,
   fromPathMetadataKey,
+  fromQueryMetadataKey,
   MessageBody,
   ParsedPath,
   Parameter,
-  fromQueryMetadataKey,
 } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getArgs = (parameters: Parameter[], pathParamLocations: number[], path: string, body: MessageBody): unknown[] => {
   const returnArgs: unknown[] = [];
   const pathParts = splitPath(path);
+
+  const bodyParams = parameters.filter((param) => param.mapping === fromBodyMetadataKey);
   const pathParams = parameters.filter((param) => param.mapping === fromPathMetadataKey);
   const queryParams = parameters.filter((param) => param.mapping === fromQueryMetadataKey);
+
+  bodyParams.forEach((param) => {
+    returnArgs[param.index] = body;
+  });
 
   pathParamLocations.forEach((paramLocation, idx) => {
     returnArgs[pathParams[idx].index] = pathParts[paramLocation];
   });
-
 
   if (queryParams.length) {
     const searchParams = new URL('http://test.me' + path).searchParams;
@@ -42,14 +47,14 @@ export const getBody = (req: IncomingMessage): Promise<Record<string, unknown> |
     let data = '';
 
     req.on('data', (dt) => {
-      data += JSON.stringify(dt);
+      data += dt;
     });
 
     req.on('end', () => {
       if (data) {
         try {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           const obj: Record<string, unknown> = JSON.parse(data);
+
           if (obj) {
             res(obj);
           }
@@ -93,8 +98,6 @@ export const parsePath = (path: string): ParsedPath  => {
 export const getRegExpForPath = (path: string): RegExp => {
   const pathParamPattern = /\/{\w+}/g;
   const pathParamCount = path.match(pathParamPattern)?.length;
-
-  // console.log(path.match(pathParamPattern));
 
   let pattern = new RegExp(path.replace(pathParamPattern, ''));
 

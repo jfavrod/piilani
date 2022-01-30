@@ -43,4 +43,12 @@ export class RouteRegistry {
     });
     return found;
   }
+
+  static findPost(path: string): Route | undefined {
+    const found = RouteRegistry.routes.find((route) => {
+      return route.path.test(path);
+    });
+
+    return found;
+  }
 }

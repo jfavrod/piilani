@@ -123,6 +123,7 @@ the **RestController** section for details on how to set base path).
 ```TypeScript
 import { get } from 'piilani/decorators/restful';
 
+@injectable()
 class ListController extends RestController {
     // code omitted.
 
@@ -157,3 +158,18 @@ export class ListsController extends RestController {
 ### Handling Query Parameters
 
 ### Handling Request Body
+
+```TypeScript
+import { fromBody, get } from 'piilani/decorators/restful';
+
+@injectable()
+export class ListsController extends RestController {
+    // code omitted.
+
+    @post()
+    public async addList(@fromBody()list: List): Promise<boolean> {
+      const res = await this.gateway?.insertAsync(list);
+      return (res?.class === 1);
+    }
+}
+```
