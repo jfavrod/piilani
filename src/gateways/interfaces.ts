@@ -18,6 +18,10 @@ export interface ITypedGatewayResponse<T> extends IGatewayResponse {
     data?: T[];
 }
 
+/**
+ * @type {Query} Query object for key/value pair searches.
+ * @type {Model} Entity for datasource operations.
+ */
 export interface ITableDataGateway<Query, Model> {
     /** The name of the table. */
     table: string;

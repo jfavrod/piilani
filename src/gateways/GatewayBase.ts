@@ -2,11 +2,7 @@
 import { ILogger } from '../context/interfaces';
 import { IGatewayResponse, ITableDataGateway, ITypedGatewayResponse } from './interfaces';
 
-/**
- * @type {Q} Query object for key/value pair searches.
- * @type {E} Entity for datasource operations.
- */
-export default class GatewayBase<Q, E> implements ITableDataGateway<Q, E> {
+export default class GatewayBase<Query, Model> implements ITableDataGateway<Query, Model> {
   public readonly className = this.constructor.name;
   public readonly table: string;
   protected logger: ILogger;
@@ -16,35 +12,35 @@ export default class GatewayBase<Q, E> implements ITableDataGateway<Q, E> {
     this.logger = logger;
   }
 
-  delete(query: Q): IGatewayResponse {
+  delete(query: Query): IGatewayResponse {
     throw new Error('Method not implemented.');
   }
 
-  deleteAsync(query: Q): Promise<IGatewayResponse> {
+  deleteAsync(query: Query): Promise<IGatewayResponse> {
     throw new Error('Method not implemented.');
   }
 
-  find(query?: Q): ITypedGatewayResponse<E> {
+  find(query?: Query): ITypedGatewayResponse<Model> {
     throw new Error('Method not implemented.');
   }
 
-  findAsync(query?: Q): Promise<ITypedGatewayResponse<E>> {
+  findAsync(query?: Query): Promise<ITypedGatewayResponse<Model>> {
     throw new Error('Method not implemented.');
   }
 
-  insert(record: E): IGatewayResponse {
+  insert(record: Model): IGatewayResponse {
     throw new Error('Method not implemented.');
   }
 
-  insertAsync(record: E): Promise<IGatewayResponse> {
+  insertAsync(record: Model): Promise<IGatewayResponse> {
     throw new Error('Method not implemented.');
   }
 
-  update(record: E): IGatewayResponse {
+  update(record: Model): IGatewayResponse {
     throw new Error('Method not implemented.');
   }
 
-  updateAsync(record: E): Promise<IGatewayResponse> {
+  updateAsync(record: Model): Promise<IGatewayResponse> {
     throw new Error('Method not implemented.');
   }
 
