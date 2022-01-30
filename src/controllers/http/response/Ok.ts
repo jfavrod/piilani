@@ -1,13 +1,10 @@
 import HttpResponse from './HttpResponse';
 import HttpStatusCode from './HttpStatusCode';
 
-export class Ok<T> extends HttpResponse {
-  public data: Readonly<T> | undefined;
-
-  public constructor(obj?: T) {
-    super(HttpStatusCode.OK);
-    this.data = Object.freeze(obj);
-  }
-}
+export const Ok = <T>(data?: T): HttpResponse<T> => {
+  const ok = new HttpResponse<T>(HttpStatusCode.OK);
+  ok.data = data;
+  return ok;
+};
 
 export default Ok;
