@@ -46,7 +46,7 @@ export class RouteRegistry {
 
   static findPost(path: string): Route | undefined {
     const found = RouteRegistry.routes.find((route) => {
-      return route.path.test(path);
+      return (route.method === 'POST' && route.path.test(path));
     });
 
     return found;
