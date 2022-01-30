@@ -10,7 +10,6 @@ import {
   Parameter,
 } from './types';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getArgs = (parameters: Parameter[], pathParamLocations: number[], path: string, body: MessageBody): unknown[] => {
   const returnArgs: unknown[] = [];
   const pathParts = splitPath(path);
