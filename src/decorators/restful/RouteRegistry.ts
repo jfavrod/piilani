@@ -21,6 +21,8 @@ export class RouteRegistry {
 
   static findGet(path: string): Route | undefined {
     const found = RouteRegistry.routes.find((rt) => {
+      if (rt.method !== 'GET') return false;
+
       let pathPattern = rt.path;
 
       const queryParams = rt.parameters
