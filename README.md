@@ -174,6 +174,28 @@ export class ListsController extends RestController {
 ### Handling Path Parameters
 
 ### Handling Query Parameters
+```TypeScript
+import { fromQuery, get } from 'piilani/decorators/restful';
+
+@injectable()
+export class ListsController extends RestController {
+    // code omitted.
+
+    @get()
+    public async getListById(@fromQuery('id') id: string): Promise<HttpResponse<List>> {
+      const res = await this.gateway.findAsync({ id })
+
+      if (res.data) {
+        return Ok(res.data[0]);
+      }
+      if (res.class === 2) {
+        return NoContent();
+      }
+
+      return BadRequest();
+    }
+}
+```
 
 ### Handling Request Body
 
