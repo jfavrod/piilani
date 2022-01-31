@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs';
 import appRoot from 'app-root-path';
 
-import { IConfig } from '../context/Config';
-import { IConfigValues } from '../context/interfaces';
+import { IConfig } from '../Config';
+import { IConfigValues } from '../interfaces';
 
-import ConfigError from '../errors/ConfigError';
-import Config from '../context/Config';
-import { Env } from '../context';
+import ConfigError from '../../errors/ConfigError';
+import Config from '../Config';
+import { Env } from '..';
 
 /**
  * Constructs an `Config` object based on the application's

@@ -3,7 +3,7 @@
  * @module Context.Factories.BaseClasses
  */
 
-import { IConfig, ILogger } from '../context';
+import { IConfig, ILogger } from '..';
 import ConfigFactory from './ConfigFactory';
 import LoggerFactory from './LoggerFactory';
 

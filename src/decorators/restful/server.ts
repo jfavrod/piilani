@@ -1,6 +1,6 @@
 import { RefStore } from '../../controllers/http/RefStore';
 import { HttpResponse } from '../../controllers/http/response';
-import { ServiceFactory } from '../../factories';
+import { ServiceFactory } from '../../context/factories';
 
 import { getArgs, getBody, normalizePath } from './helpers';
 import { RouteRegistry } from './RouteRegistry';

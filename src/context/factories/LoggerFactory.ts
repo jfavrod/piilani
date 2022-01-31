@@ -5,7 +5,7 @@
 
 import { createLogger, format, transports } from 'winston';
 import * as Transport from 'winston-transport';
-import { IConfig, ILogger } from '../context';
+import { IConfig, ILogger } from '..';
 
 import ConfigFactory from './ConfigFactory';
 
@@ -28,11 +28,18 @@ export default class LoggerFactory {
       LoggerFactory.config = ConfigFactory.getInstance();
     }
 
-    if (LoggerFactory.logger) {
+    if (!LoggerFactory.logger) {
+      const loggingFormat = format.printf(({ level, message, timestamp }) => {
+        return `${timestamp} [${level}]: ${message}`;
+      });
+
       const loggingConfig = LoggerFactory.config.getLoggingConfig();
 
       if (loggingConfig) {
-        loggingConfig.format = format.json();
+        loggingConfig.format = format.combine(
+          format.timestamp(),
+          loggingFormat
+        );
 
         loggingConfig.transports = [] as Transport[];
 
@@ -51,12 +58,12 @@ export default class LoggerFactory {
 
         LoggerFactory.logger = createLogger(loggingConfig);
       }
+      else {
+        LoggerFactory.logger = console;
+      }
+    }
 
-      return LoggerFactory.logger;
-    }
-    else {
-      return console;
-    }
+    return LoggerFactory.logger;
   };
 }
 

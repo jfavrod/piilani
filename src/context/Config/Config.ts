@@ -1,4 +1,3 @@
-// import approot from 'app-root-path'
 import { injectable } from 'tsyringe';
 
 import { DBDriver, Env } from '../enums';
