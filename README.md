@@ -12,12 +12,14 @@ Prerequisites
 The following software is required:
 
 * app-root-path
-* Nodejs
-* NPM
 * reflect-metadata
 * tsyringe
 * winston
 * winston-logger
+
+```
+npm i app-root-path reflect-metadata tsyringe winston winston-logger
+```
 
 Getting Started
 ---------------
@@ -69,6 +71,32 @@ default. The `dev.config.json`, `non-prod.config.json`, and `prod.config.json`
 files are for overriding the default configuration in the respective runttime
 environments (see **Environment**).
 
+#### Dependency Injection
+Dependency injection is handled by `tsyringe`. The recommended way of
+working with the library is to create a `startup.ts` file at the root
+of your project's source code.
+
+In this file, we can include the required `reflect-metadata` package,
+and manage the Dependency Injection container.
+
+The `startup.ts` MUST be included before any 
+
+
+**Example startup.ts**
+```TypeScript
+import 'reflect-metadata';
+import { container } from 'tsyringe';
+
+export const DependencyInjection = container;
+
+container.register(/*token, value/class*/)
+```
+
+If your project grows very large, you can split the file and include
+the child files in the parent `startup.ts`.
+
+*TODO: This could be scripted. Options should exist for creating a
+startup.ts in a new or existing project.*
 
 #### Database
 The app can be configured to use one or many databases. Currently, only
