@@ -65,7 +65,11 @@ export function fromQuery(param: string) {
 
 export function get(path?: string): CallableFunction {
   return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
-    const instance = target.constructor() as RestController;
+    // Using any here because compiled code needs to use new keyword.
+    // Was previous calling constructor without new.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const instance = new (target.constructor as any)() as RestController;
+
     const method = (target as unknown as Record<string, () => unknown>)[propertyKey];
     const originalDescriptor = descriptor.value;
     const parsedPath = parsePath(instance.basePath + (path || ''));
@@ -92,7 +96,12 @@ export function get(path?: string): CallableFunction {
 
 export function post(path?: string): CallableFunction {
   return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
-    const instance = target.constructor() as RestController;
+
+    // Using any here because compiled code needs to use new keyword.
+    // Was previous calling constructor without new.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const instance = new (target.constructor as any)() as RestController;
+
     const method = (target as unknown as Record<string, () => unknown>)[propertyKey];
     const originalDescriptor = descriptor.value;
     const parsedPath = parsePath(instance.basePath + (path || ''));
