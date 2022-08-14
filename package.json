@@ -1,6 +1,6 @@
 {
   "name": "piilani",
-  "version": "1.0.0-dev.10",
+  "version": "1.0.0-dev.12",
   "description": "Just another Web application framework.",
   "directories": {
     "bin": "./bin"
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "run-s lint compile:clean compile:cli cli:exec cli:templates",
     "build:cli": "run-s clean:cli compile:cli",
-    "clean": "rm -rf bin/ context/ controllers/ decorators/ errors/ factories/ gateways/ mappers/ services/",
+    "clean": "rm -rf bin/ context/ controllers/ decorators/ errors/ factories/ gateways/ mapping/ services/",
     "cli:exec": "mv bin/cli.js bin/cli && chmod +x bin/cli",
     "cli:templates": "cp -r src/bin/templates bin/",
     "compile": "tsc -p ./tsconfig.js",
@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "app-root-path": "^3.0.0",
+    "case": "^1.6.3",
     "commander": "^8.3.0",
     "mongodb": "^4.3.1",
     "reflect-metadata": "^0.1.13",
