@@ -35,6 +35,7 @@ npm i piilani
 yarn add piilani
 ```
 
+### Initialization
 To initialize your project directory run the following Piilani command:
 
 ```

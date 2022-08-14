@@ -2,7 +2,7 @@ import { BaseController } from '../BaseController';
 import { RefStore } from './RefStore';
 
 export class RestController extends BaseController {
-  protected _basePath = '';
+  private _basePath = '';
 
   public constructor() {
     super();

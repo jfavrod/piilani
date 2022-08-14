@@ -26,7 +26,7 @@ export type ParsedPath = {
 export type Route = {
   constructor: string;
   function: (...params: unknown[]) => unknown;
-  method: 'GET' | 'POST';
+  method: 'DELETE' | 'GET' | 'POST' | 'PUT';
   path: RegExp;
   parameters: Parameter[];
   pathParameterLocations: number[];
