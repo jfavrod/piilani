@@ -10,6 +10,7 @@ export type Parameter = {
     index: number;
     mapping: symbol,
     paramName: string;
+    required: boolean;
     type: ParamType | 'object';
     value?: unknown;
 };

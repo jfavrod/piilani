@@ -7,10 +7,15 @@ import { RouteRegistry } from './RouteRegistry';
 import {
   fromBodyMetadataKey,
   fromPathMetadataKey,
+  fromQueryMetadataKey,
   Parameter,
 } from './types';
 
 
+/**
+ * @param path The HTTP request path (appended to class' basePath)
+ * that this method handles.
+ */
 export function get(path?: string): CallableFunction {
   return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
     const instance = new (target.constructor as { new(): RestController })();
@@ -18,6 +23,7 @@ export function get(path?: string): CallableFunction {
     const originalDescriptor = descriptor.value;
     const parsedPath = parsePath(instance.basePath + (path || ''));
     const pathParams: Parameter[] = Reflect.getOwnMetadata(fromPathMetadataKey, target, propertyKey) || [];
+    const queryParams: Parameter[] = Reflect.getOwnMetadata(fromQueryMetadataKey, target, propertyKey) || [];
 
     pathParams.sort((a, b) => a.index - b.index);
 
@@ -26,7 +32,7 @@ export function get(path?: string): CallableFunction {
       function: method,
       method: 'GET',
       path: parsedPath.pathPattern,
-      parameters: pathParams,
+      parameters: pathParams.concat(queryParams),
       pathParameterLocations: parsedPath.pathParamLocations,
     });
 

@@ -29,7 +29,18 @@ export const getArgs = (parameters: Parameter[], pathParamLocations: number[], p
   if (queryParams.length) {
     const searchParams = new URL('http://test.me' + path).searchParams;
     queryParams.forEach((param) => {
-      returnArgs[param.index] = searchParams.get(param.paramName);
+      let val: string | null | number | undefined = searchParams.get(param.paramName);
+
+      if (val) {
+        if (param.type === 'number') {
+          val = Number(val);
+        }
+      }
+      else {
+        val = undefined;
+      }
+
+      returnArgs[param.index] = val;
     });
   }
 

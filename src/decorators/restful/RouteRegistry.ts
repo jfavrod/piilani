@@ -39,6 +39,12 @@ export class RouteRegistry {
         pathPattern = new RegExp(
           pathPattern.source + queryParams[i].paramName + /=\w+/.source
         );
+
+        if (!queryParams[i].required) {
+          pathPattern = new RegExp(
+            `(${pathPattern.source})?`
+          );
+        }
       }
 
       return pathPattern.test(path);

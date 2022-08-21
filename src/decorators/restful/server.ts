@@ -21,7 +21,6 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
   getBody(req).then(async (body) => {
     if (route) {
       const argv = getArgs(route.parameters, route?.pathParameterLocations, path, body);
-      // console.log('argv', argv);
 
       try {
         const response = await route.function.call(RefStore.getRef(route.constructor), ...argv);
