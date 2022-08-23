@@ -15,7 +15,9 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
   }
   else if (req.method?.toUpperCase() === 'POST') {
     route = RouteRegistry.findPost(path);
-    // console.log('route', route);
+  }
+  else if (req.method?.toUpperCase() === 'PUT') {
+    route = RouteRegistry.findPut(path);
   }
 
   getBody(req).then(async (body) => {

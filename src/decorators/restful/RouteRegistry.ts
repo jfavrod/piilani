@@ -59,4 +59,12 @@ export class RouteRegistry {
 
     return found;
   }
+
+  static findPut(path: string): Route | undefined {
+    const found = RouteRegistry.routes.find((route) => {
+      return (route.method === 'PUT' && route.path.test(path));
+    });
+
+    return found;
+  }
 }
