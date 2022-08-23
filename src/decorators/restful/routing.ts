@@ -74,7 +74,7 @@ export function post(path?: string): CallableFunction {
 
 export function put(path?: string): CallableFunction {
   return function(target: RestController, propertyKey: string, descriptor: PropertyDescriptor): PropertyDescriptor {
-    const instance = target.constructor() as RestController;
+    const instance = new (target.constructor as { new(): RestController })();
     const method = (target as unknown as Record<string, () => unknown>)[propertyKey];
     const originalDescriptor = descriptor.value;
     const parsedPath = parsePath(instance.basePath + (path || ''));
