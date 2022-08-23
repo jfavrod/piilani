@@ -11,6 +11,7 @@ export {
   IDatabaseSSL,
   IDatabaseValues,
   ILogger,
+  ILoggerToken,
   ILoggingConfig,
   IMultiDatabaseVals,
   IService,

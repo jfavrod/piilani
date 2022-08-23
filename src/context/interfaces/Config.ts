@@ -1,10 +1,6 @@
-/**
- * @packageDocumentation
- * @module Context
- */
-
 import { LoggerOptions } from 'winston';
-import { DBDriver } from '.';
+import { DBDriver } from '../enums';
+import { LogLevel } from './ILogger';
 
 export interface IConfigValues {
     [index: string]: unknown;
@@ -32,15 +28,6 @@ export interface IDatabaseValues {
     port: number;
     ssl?: IDatabaseSSL;
     user: string;
-}
-
-export type LogLevel = 'debug' | 'error' | 'fatal' | 'info' | 'warn';
-export interface ILogger {
-    debug(mesg?: string): void;
-    error(mesg?: string): void;
-    info(mesg?: string): void;
-    log(level: LogLevel, mesg?: string): void;
-    warn(mesg?: string): void;
 }
 
 export interface ILoggingConfig extends LoggerOptions {
