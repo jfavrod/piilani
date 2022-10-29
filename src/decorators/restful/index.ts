@@ -7,6 +7,7 @@ export {
 } from './parameters';
 
 export {
+  del,
   get,
   post,
   put,

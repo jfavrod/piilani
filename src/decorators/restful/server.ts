@@ -13,6 +13,9 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
   if (req.method?.toUpperCase() === 'GET') {
     route = RouteRegistry.findGet(path);
   }
+  else if (req.method?.toUpperCase() === 'DELETE') {
+    route = RouteRegistry.findDelete(path);
+  }
   else if (req.method?.toUpperCase() === 'POST') {
     route = RouteRegistry.findPost(path);
     // console.log('route', route);

@@ -1,4 +1,4 @@
-import { fromQueryMetadataKey, Parameter, Route } from './types';
+import { fromPathMetadataKey, fromQueryMetadataKey, Parameter, Route } from './types';
 
 export class RouteRegistry {
   private static routes: Route[] = [];
@@ -17,6 +17,46 @@ export class RouteRegistry {
     }
 
     return false;
+  }
+
+  static findDelete(path: string): Route | undefined {
+    const found = RouteRegistry.routes.find((rt) => {
+      if (rt.method !== 'DELETE') return false;
+
+      let pathPattern = rt.path;
+
+      const pathParams = rt.parameters
+        .filter((param: Parameter) => param.mapping === fromPathMetadataKey);
+      
+      if (pathParams.length) {
+        pathPattern = new RegExp(pathPattern.source.replace('$', '') + /\/\w+/.source);
+      }
+
+      const queryParams = rt.parameters
+        .filter((param: Parameter) => param.mapping === fromQueryMetadataKey);
+
+      if (queryParams.length) {
+        pathPattern = new RegExp(pathPattern.source.replace('$', '') + /\?/.source);
+      }
+
+      for (let i = 0; i < queryParams.length; i++) {
+        // If there's more than one query param, add the amp.
+        if (i) pathPattern = new RegExp(pathPattern.source + '&');
+
+        pathPattern = new RegExp(
+          pathPattern.source + queryParams[i].paramName + /=\w+/.source
+        );
+
+        if (!queryParams[i].required) {
+          pathPattern = new RegExp(
+            `(${pathPattern.source})?`
+          );
+        }
+      }
+
+      return pathPattern.test(path);
+    });
+    return found;
   }
 
   static findGet(path: string): Route | undefined {
