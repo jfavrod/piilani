@@ -93,7 +93,8 @@ export const parsePath = (path: string): ParsedPath  => {
       pathPattern = new RegExp(pathPattern.source + '/' + part);
     } else {
       pathPattern = new RegExp(pathPattern.source + '/' + /\w+/.source);
-      pathParamLocations.push(index);
+      // Plus one, because the controller name is the base of the path.
+      pathParamLocations.push(index + 1);
     }
   });
 

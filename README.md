@@ -22,6 +22,23 @@ The following software is required:
 npm i app-root-path reflect-metadata tsyringe winston winston-logger
 ```
 
+### TypeScript Configuration
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6"
+  },
+}
+```
+
+```TypeScript
+// index.ts
+import 'reflect-metadata';
+```
+
 Getting Started
 ---------------
 
