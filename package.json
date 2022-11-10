@@ -1,6 +1,6 @@
 {
   "name": "piilani",
-  "version": "1.0.0-dev.17",
+  "version": "1.0.0-dev.18",
   "description": "Just another Web application framework.",
   "directories": {
     "bin": "./bin"
