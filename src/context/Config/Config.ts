@@ -135,7 +135,9 @@ export default class Config implements IConfig {
   }
 
   private getMongoString(values: IDatabaseValues): string {
-    let connString = 'mongodb+srv://';
+    let connString = values.host.toLowerCase() === 'localhost'
+      ? 'mongodb://'
+      : 'mongodb+srv://';
     connString += values.user;
     connString += `:${values.password}`;
     connString += `@${values.host}`;
