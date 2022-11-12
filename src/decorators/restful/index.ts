@@ -1,5 +1,7 @@
 import './server';
 
+export { authenticated } from './authenticated';
+
 export {
   fromBody,
   fromPath,
