@@ -19,18 +19,13 @@ export interface ITypedGatewayResponse<T> extends IGatewayResponse {
 }
 
 /**
- * @type {Query} Query object for key/value pair searches.
  * @type {Model} Entity for datasource operations.
  */
-export interface ITableDataGateway<Query, Model> {
+export interface ITableDataGateway<Model> {
     /** The name of the table. */
     table: string;
-    delete(query: Query): IGatewayResponse;
-    deleteAsync(query: Query): Promise<IGatewayResponse>;
-    find(query?: Query): ITypedGatewayResponse<Model>;
-    findAsync(query?: Query): Promise<ITypedGatewayResponse<Model>>;
-    insert(record: Model): IGatewayResponse;
-    insertAsync(record: Model): Promise<IGatewayResponse>;
-    update(record?: Model): IGatewayResponse;
-    updateAsync(record?: Model): Promise<IGatewayResponse>;
+    delete(query: Partial<Model>): Promise<IGatewayResponse>;
+    find(query?: Partial<Model>): Promise<ITypedGatewayResponse<Model>>;
+    insert(record: Model): Promise<IGatewayResponse>;
+    update(record?: Model): Promise<IGatewayResponse>;
 }
