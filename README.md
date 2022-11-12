@@ -2,42 +2,10 @@ Piilani
 =======
 Pee ‧ ee ‧ lawn ‧ ee - Hawaiian; to go up to the heavens/sky.
 
-A framework for building cloud-based Node.js (TypeScript/JavaScript)
-back-end Web services.
+A framework for building cloud-based Node.js TypeScript back-end Web services.
 
 ⚠️ UNDER DEVELOPMENT: NOT PRODUCTION READY ⚠️
 
-Prerequisites
--------------
-The following software is required:
-
-* app-root-path
-* case
-* reflect-metadata
-* tsyringe
-* winston
-* winston-logger
-
-```
-npm i app-root-path reflect-metadata tsyringe winston winston-logger
-```
-
-### TypeScript Configuration
-```json
-// tsconfig.json
-{
-  "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es6"
-  },
-}
-```
-
-```TypeScript
-// index.ts
-import 'reflect-metadata';
-```
 
 Getting Started
 ---------------
@@ -83,25 +51,47 @@ specify which one the app is currently running in:
 ```
 
 
-### Configuration
+Configuration
+-------------
 After initializing the project (see **Installation**), you'll have 4
 configuration files in your `config` directory. The `config.json` file is the
 default. The `dev.config.json`, `non-prod.config.json`, and `prod.config.json`
-files are for overriding the default configuration in the respective runttime
+files are for overriding the default configuration in the respective runtime
 environments (see **Environment**).
 
-#### Dependency Injection
+### TypeScript Configuration
+The following values must be set in your tsconfig.json.
+
+```json
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6"
+  },
+}
+```
+
+### Entry Point
+At the entry point for the service, `reflect-metadata` must be imported.
+This is required for decorator support. In Piilani, the entry point is
+conventionally `startup.ts`. More on that in the Dependency Injection
+section.
+
+```TypeScript
+import 'reflect-metadata';
+```
+
+### Dependency Injection
 Dependency injection is handled by `tsyringe`. The recommended way of
 working with the library is to create a `startup.ts` file at the root
-of your project's source code.
+of your project's source code. In this file, we can include the
+required `reflect-metadata` package, and manage the Dependency
+Injection container.
 
-In this file, we can include the required `reflect-metadata` package,
-and manage the Dependency Injection container.
+The `startup.ts` MUST be included before any application code.
 
-The `startup.ts` MUST be included before any 
-
-
-**Example startup.ts**
+#### Example startup.ts
 ```TypeScript
 import 'reflect-metadata';
 import { container } from 'tsyringe';
@@ -111,20 +101,23 @@ export const DependencyInjection = container;
 container.register(/*token, value/class*/)
 ```
 
+For more on dependency injection, see the tsyringe
+[documentation](https://github.com/Microsoft/tsyringe#readme).
 If your project grows very large, you can split the file and include
 the child files in the parent `startup.ts`.
 
 *TODO: This could be scripted. Options should exist for creating a
 startup.ts in a new or existing project.*
 
-#### Database
+### Database
 The app can be configured to use one or many databases. Currently, only
-PostgreSQL is officially supported. You can still use other databases, but
-certain convenience functions (like the `getConnectionString` method of the
-`Config` class).
+PostgreSQL and Mongodb are officially supported. You can still use other
+databases, but certain convenience functions (like the
+`getConnectionString` method of the `Config` class) will be unusable.
 
 
-### Rest Controllers
+Rest Controllers
+----------------
 The base of a RESTful Web service is the RestController.
 
 ```TypeScript
@@ -171,7 +164,7 @@ the **RestController** section for details on how to set base path).
 
 ```TypeScript
 import { HttpResponse, NoContent, Ok, ServerError } from 'piilani/controllers/http/response';
-import { get } from 'piilani/decorators/restful';
+import { del, get, post, put } from 'piilani/decorators/restful';
 
 @injectable()
 class ListController extends RestController {
@@ -217,8 +210,8 @@ export class ListsController extends RestController {
 }
 ```
 
-
 ### Handling Path Parameters
+TODO: Document the usage of `@fromPath` decorator.
 
 ### Handling Query Parameters
 ```TypeScript
@@ -245,7 +238,6 @@ export class ListsController extends RestController {
 ```
 
 ### Handling Request Body
-
 ```TypeScript
 import { fromBody, get } from 'piilani/decorators/restful';
 
@@ -266,5 +258,51 @@ export class ListsController extends RestController {
 
       return ServerError();
     }
+}
+```
+
+Authentication
+--------------
+TODO: Document the Authentication configuration.
+
+```TypeScript
+// startup.ts
+import { Authentication } from 'piilani/services/auth/Authentication';
+
+DependencyInjection.register(Gateways.Users, UsersMongoGateway);
+
+Authentication.configure({
+  gateway: DependencyInjection.resolve<IUsersGateway>(Gateways.Users),
+  privateKey: '<private-key>',
+});
+```
+
+### Authenticated Endpoints
+To require users to be authenticated to access routes, add the
+`@authenticated` decorated to the Route's method.
+
+This will require uses to pass a [JWT Bearer token](https://en.wikipedia.org/wiki/JSON_Web_Token#Use)
+along with the request in the HTTP `Authorization` header.
+
+```TypeScript
+import { authenticated, post, fromBody } from 'piilani/decorators/restful';
+
+class ListsController extends RestController {
+  // --- code omitted -- //
+
+  @authenticated()
+  @post()
+  public async addList(@fromBody()list: List): Promise<HttpResponse> {
+    const res = await this.gateway.insert(new List(list));
+
+    if (res.class === 1) {
+      return Created();
+    }
+    if (res.class === 2) {
+      return BadRequest();
+    }
+
+    return ServerError();
+  }
 }
 ```
