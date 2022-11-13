@@ -30,7 +30,6 @@ To initialize your project directory run the following Piilani command:
 ./node_modules/piilani/bin/cli init
 ```
 
-
 This will install all required dependencies and create a `config`
 directory with config files for each supported environment.
 
@@ -50,16 +49,14 @@ specify which one the app is currently running in:
 +-------------------+---------------+
 ```
 
-
-Configuration
--------------
-After initializing the project (see **Installation**), you'll have 4
+### Configuration
+After initializing the project (see **Getting Started**), you'll have 4
 configuration files in your `config` directory. The `config.json` file is the
 default. The `dev.config.json`, `non-prod.config.json`, and `prod.config.json`
 files are for overriding the default configuration in the respective runtime
 environments (see **Environment**).
 
-### TypeScript Configuration
+#### TypeScript Configuration
 The following values must be set in your tsconfig.json.
 
 ```json
@@ -72,7 +69,7 @@ The following values must be set in your tsconfig.json.
 }
 ```
 
-### Entry Point
+#### Entry Point
 At the entry point for the service, `reflect-metadata` must be imported.
 This is required for decorator support. In Piilani, the entry point is
 conventionally `startup.ts`. More on that in the Dependency Injection
@@ -82,7 +79,7 @@ section.
 import 'reflect-metadata';
 ```
 
-### Dependency Injection
+#### Dependency Injection
 Dependency injection is handled by `tsyringe`. The recommended way of
 working with the library is to create a `startup.ts` file at the root
 of your project's source code. In this file, we can include the
@@ -91,7 +88,7 @@ Injection container.
 
 The `startup.ts` MUST be included before any application code.
 
-#### Example startup.ts
+##### Example startup.ts
 ```TypeScript
 import 'reflect-metadata';
 import { container } from 'tsyringe';
@@ -109,7 +106,7 @@ the child files in the parent `startup.ts`.
 *TODO: This could be scripted. Options should exist for creating a
 startup.ts in a new or existing project.*
 
-### Database
+#### Database
 The app can be configured to use one or many databases. Currently, only
 PostgreSQL and Mongodb are officially supported. You can still use other
 databases, but certain convenience functions (like the
@@ -150,9 +147,7 @@ class ListController extends RestController {
 }
 ```
 
-Now all route paths handled by this controller will begin with
-`/lists`.
-
+Now all route paths handled by this controller will begin with `/lists`.
 
 ### Handling HTTP Requests
 To handle HTTP requests, use the `get`, `post`, `put`, and `delete`
