@@ -11,6 +11,7 @@ export class Authentication {
 
   public static configure(config: {
     algorithm?: Algorithm,
+    /** Number of minutes until tokens expire. */
     exp?: number,
     gateway: ITableDataGateway<ICredentials>,
     publicKey: string,
@@ -30,7 +31,11 @@ export class Authentication {
     if (res.class === 1 && res.data) {
       const user = res.data[0];
       (user.password as unknown) = undefined;
-      token = jwt.sign(user, Authentication._privateKey, { algorithm: Authentication._algorithm});
+      token = jwt.sign(
+        user,
+        Authentication._privateKey,
+        { algorithm: Authentication._algorithm, expiresIn: Authentication._exp }
+      );
     }
 
     return token;
