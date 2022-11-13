@@ -267,8 +267,10 @@ import { Authentication } from 'piilani/services/auth/Authentication';
 DependencyInjection.register(Gateways.Users, UsersMongoGateway);
 
 Authentication.configure({
+  // Minutes until keys expire.
+  exp: 60,
   gateway: DependencyInjection.resolve<IUsersGateway>(Gateways.Users),
-  privateKey: '<private-key>',
+  privateKey: '<private-key or secret>',
 });
 ```
 
