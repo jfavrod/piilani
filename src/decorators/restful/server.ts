@@ -36,9 +36,14 @@ ServiceFactory.getHttpServer().on('request', (req, res) => {
         if (authHeader && authHeader.match(/^Bearer /i)) {
           const username = Authentication.verify(authHeader.replace(/^Bearer /i, '')) as string;
 
-          // Overriding access modifier to set _user on the Controller
-          // that is configured to handle the given route.
-          (controller as { _user: ICredentials })._user = { username, password: '' };
+          if (username) {
+            // Overriding access modifier to set _user on the Controller
+            // that is configured to handle the given route.
+            (controller as { _user: ICredentials })._user = { username, password: '' };
+          } else {
+            res.statusCode = 401;
+          }
+
         } else {
           res.statusCode = 401;
         }
