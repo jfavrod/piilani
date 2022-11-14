@@ -6,6 +6,7 @@
 import { Env } from '../enums';
 
 import {
+  IConfigValues,
   IDatabaseValues,
   ILoggingConfig,
   IMultiDatabaseVals as IMultiDatabaseValues,
@@ -25,6 +26,10 @@ export interface IConfig {
     getEnv(): Env;
     getListenPort(): number | undefined;
     getLoggingConfig(): ILoggingConfig | undefined;
+    getServerConfig(): {
+      port: number;
+      ssl?: IConfigValues['ssl']
+    };
     getServiceConfig(serviceName: string): {[key: string]: unknown} | undefined;
     getServiceUrl(service: string): string | undefined;
     toString(): string;

@@ -20,5 +20,10 @@
         "level": "debug",
         "noConsole": false
     },
+    "ssl": {
+        "ca": "",
+        "cert": "",
+        "key": ""
+    },
     "services": {}
 }

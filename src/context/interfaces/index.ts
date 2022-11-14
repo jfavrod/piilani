@@ -4,9 +4,9 @@ export { ILoggerToken } from './tokens';
 
 export {
   IConfigValues,
-  IDatabaseSSL,
   IDatabaseValues,
   ILoggingConfig,
   IMultiDatabaseVals,
   IService,
+  ISslConfig,
 } from './Config';

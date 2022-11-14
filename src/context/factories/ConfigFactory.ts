@@ -50,7 +50,7 @@ export default class ConfigFactory {
 
     try {
       defaultConfigValues =
-                JSON.parse(readFileSync(ConfigFactory.defaultConfigFile).toString()) as Partial<IConfigValues> || {};
+        JSON.parse(readFileSync(ConfigFactory.defaultConfigFile).toString()) as Partial<IConfigValues> || {};
     }
     catch ({ message }) {
       // eslint-disable-next-line no-console
@@ -61,7 +61,7 @@ export default class ConfigFactory {
     if (process.env.PIILANI_ENV === Env.prod) {
       try {
         const config = Object.assign(defaultConfigValues,
-                    JSON.parse(readFileSync(ConfigFactory.prodConfigFile).toString()) as IConfigValues);
+          JSON.parse(readFileSync(ConfigFactory.prodConfigFile).toString()) as IConfigValues);
 
         return new Config(config, process.env.PIILANI_ENV, ConfigFactory.configDir);
       }
@@ -74,7 +74,7 @@ export default class ConfigFactory {
     else if (process.env.PIILANI_ENV === Env['non-prod']) {
       try {
         const config = Object.assign(defaultConfigValues,
-                    JSON.parse(readFileSync(ConfigFactory.nonProdConfigFile).toString()) as IConfigValues);
+          JSON.parse(readFileSync(ConfigFactory.nonProdConfigFile).toString()) as IConfigValues);
 
         return new Config(config, process.env.PIILANI_ENV, ConfigFactory.configDir);
       }
@@ -87,7 +87,7 @@ export default class ConfigFactory {
     else {
       try {
         const config = Object.assign(defaultConfigValues,
-                    JSON.parse(readFileSync(ConfigFactory.devConfigFile).toString()) as IConfigValues);
+          JSON.parse(readFileSync(ConfigFactory.devConfigFile).toString()) as IConfigValues);
         return new Config(config, Env.dev, ConfigFactory.configDir);
       }
       catch (err) {

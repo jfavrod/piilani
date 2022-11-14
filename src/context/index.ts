@@ -8,13 +8,13 @@ export {
 
 export {
   IConfigValues,
-  IDatabaseSSL,
   IDatabaseValues,
   ILogger,
   ILoggerToken,
   ILoggingConfig,
   IMultiDatabaseVals,
   IService,
+  ISslConfig,
 } from './interfaces';
 
 export {

@@ -9,15 +9,16 @@ export interface IConfigValues {
     listenPort?: number;
     logging: ILoggingConfig;
     services?: { [key: string]: IService };
+    ssl?: ISslConfig;
 }
 
-export interface IDatabaseSSL {
+export interface ISslConfig {
     /** Path, relative to config directory, where ca file is located. */
     ca?: string;
     /** Path, relative to config directory, where cert file is located. */
-    cert?: string;
+    cert: string;
     /** Path, relative to config directory, where key file is located. */
-    key?: string;
+    key: string;
 }
 
 export interface IDatabaseValues {
@@ -26,7 +27,7 @@ export interface IDatabaseValues {
     name: string;
     password: string;
     port: number;
-    ssl?: IDatabaseSSL;
+    ssl?: ISslConfig;
     user: string;
 }
 

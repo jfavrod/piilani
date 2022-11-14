@@ -29,23 +29,13 @@ export default class Config implements IConfig {
     this.configDir = configDir;
     this.configValues = configValues;
     this.env = env;
-
-    this.getConfigDir = this.getConfigDir.bind(this);
-    this.getConnectionString = this.getConnectionString.bind(this);
-    this.getDatabaseConfig = this.getDatabaseConfig.bind(this);
-    this.getEnv = this.getEnv.bind(this);
-    this.getListenPort = this.getListenPort.bind(this);
-    this.getLoggingConfig = this.getLoggingConfig.bind(this);
-    this.getServiceConfig = this.getServiceConfig.bind(this);
-    this.getServiceUrl = this.getServiceUrl.bind(this);
-    this.toString = this.toString.bind(this);
   }
 
-  public getConfigDir(): string {
+  public getConfigDir = (): string => {
     return this.configDir;
-  }
+  };
 
-  public getConnectionString(db?: string): string {
+  public getConnectionString = (db?: string): string => {
     let connString = '';
     let dbVals: IDatabaseValues;
 
@@ -70,47 +60,54 @@ export default class Config implements IConfig {
     }
 
     return connString;
-  }
+  };
 
   /**
    * Get a copy of the database configuration.
    */
-  public getDatabaseConfig(): IDatabaseValues | IMultiDatabaseVals {
+  public getDatabaseConfig = (): IDatabaseValues | IMultiDatabaseVals => {
     return Object.assign({}, this.configValues.database);
-  }
+  };
 
   /**
    * Get the currently running Env.
    */
-  public getEnv(): Env {
+  public getEnv = (): Env => {
     return this.env;
-  }
+  };
 
   /**
    * If running as a service, the port the service is supposed to
    * listen on.
    */
-  public getListenPort(): number | undefined {
+  public getListenPort = (): number | undefined => {
     return this.configValues.listenPort || 3000;
-  }
+  };
 
   /**
    * Get a copy of the logging configuration.
    */
-  public getLoggingConfig(): ILoggingConfig {
+  public getLoggingConfig = (): ILoggingConfig => {
     return Object.assign({}, this.configValues.logging);
-  }
+  };
 
-  public getServiceConfig(serviceName: string): IService | undefined {
+  public getServerConfig = (): { port: number; ssl?: { cert: string; key: string; } | undefined; } => {
+    return {
+      port: this.configValues.listenPort || 3000,
+      ssl: this.configValues.ssl,
+    };
+  };
+
+  public getServiceConfig = (serviceName: string): IService | undefined => {
     if (this.configValues.services && Object.keys(this.configValues.services).includes(serviceName)) {
       return this.configValues.services[serviceName];
     }
-  }
+  };
 
   /**
    * Retrieve a list of the configured services.
    */
-  public getServiceList(): string[] {
+  public getServiceList = (): string[] => {
     const services: string[] = [];
 
     for (const service in this.configValues.services) {
@@ -120,21 +117,21 @@ export default class Config implements IConfig {
     }
 
     return services;
-  }
+  };
 
-  public getServiceUrl(serviceName: string): string | undefined {
+  public getServiceUrl = (serviceName: string): string | undefined => {
     if (this.configValues.services
             && Object.keys(this.configValues.services).includes(serviceName)
             && this.configValues.services[serviceName].url) {
       return this.configValues.services[serviceName].url;
     }
-  }
+  };
 
   public toString(): string {
     return JSON.stringify(this.configValues, null, 2);
   }
 
-  private getMongoString(values: IDatabaseValues): string {
+  private getMongoString = (values: IDatabaseValues): string => {
     let connString = values.host.toLowerCase() === 'localhost'
       ? 'mongodb://'
       : 'mongodb+srv://';
@@ -142,13 +139,13 @@ export default class Config implements IConfig {
     connString += `:${values.password}`;
     connString += `@${values.host}`;
     return connString;
-  }
+  };
 
   /**
    * @param values
    * @returns
    */
-  private getPostgresString(values: IDatabaseValues): string {
+  private getPostgresString = (values: IDatabaseValues): string => {
     let connString = 'postgresql://';
     connString += values.user;
     connString += `:${values.password}`;
@@ -156,5 +153,5 @@ export default class Config implements IConfig {
     connString += `:${values.port}`;
     connString += `/${values.name}`;
     return connString;
-  }
+  };
 }
