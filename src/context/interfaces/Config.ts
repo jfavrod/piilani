@@ -24,6 +24,9 @@ export interface ISslConfig {
 export interface IDatabaseValues {
     driver: DBDriver;
     host: string;
+    mongo: {
+        useSrv?: boolean;
+    };
     name: string;
     password: string;
     port: number;

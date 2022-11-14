@@ -1,6 +1,9 @@
 {
     "database": {
         "host": "",
+        "mongo": {
+            "useSrv": false
+        },
         "name": "",
         "password": "",
         "port": 0,
