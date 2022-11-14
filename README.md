@@ -106,6 +106,22 @@ the child files in the parent `startup.ts`.
 *TODO: This could be scripted. Options should exist for creating a
 startup.ts in a new or existing project.*
 
+#### Server
+By default, the HTTP server will run unsecured. To run the server secured
+(over HTTPS), add the cert and key files to the config file(s).
+
+The files are paths relative to the project's root directory.
+
+```json
+{
+  "listenPort": 443,
+  "ssl": {
+    "cert": "ssl/ssl.cert",
+    "key": "ssl/ssl.key"
+  }
+}
+```
+
 #### Database
 The app can be configured to use one or many databases. Currently, only
 PostgreSQL and Mongodb are officially supported. You can still use other
