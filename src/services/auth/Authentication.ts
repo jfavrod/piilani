@@ -11,7 +11,7 @@ export class Authentication {
 
   public static configure(config: {
     algorithm?: Algorithm,
-    /** Number of minutes until tokens expire. */
+    /** Number of seconds until tokens expire. */
     exp?: number,
     gateway: ITableDataGateway<ICredentials>,
     publicKey: string,
