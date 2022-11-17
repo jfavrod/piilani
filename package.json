@@ -1,6 +1,6 @@
 {
   "name": "piilani",
-  "version": "1.0.0-dev.24",
+  "version": "1.0.0-dev.25",
   "description": "Just another Web application framework.",
   "directories": {
     "bin": "./bin"
@@ -17,9 +17,6 @@
     "lint": "eslint --ext .ts src/**",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Jason Favrod <mail@jasonfavrod.com>",
-  "license": "MIT",
   "dependencies": {
     "app-root-path": "^3.0.0",
     "case": "^1.6.3",
@@ -43,5 +40,20 @@
     "npm-run-all": "^4.1.5",
     "ts-mocha": "^9.0.2",
     "typescript": "^4.5.5"
-  }
+  },
+  "keywords": [
+    "framework",
+    "web",
+    "http",
+    "rest",
+    "server",
+    "typescript",
+    "backend"
+  ],
+  "author": "Jason Favrod <mail@jasonfavrod.com>",
+  "repository": {
+    "url": "https://github.com/jfavrod/piilani",
+    "type": "git"
+  },
+  "license": "MIT"
 }
