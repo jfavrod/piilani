@@ -1,6 +1,6 @@
 {
   "name": "piilani",
-  "version": "1.0.0-dev.25",
+  "version": "1.0.0-dev.26",
   "description": "Just another Web application framework.",
   "directories": {
     "bin": "./bin"
@@ -14,6 +14,7 @@
     "compile": "tsc -p ./tsconfig.js",
     "compile:clean": "npm run clean && tsc",
     "compile:cli": "cd src/bin && tsc -p ./tsconfig.json",
+    "dist": "npm run build && npm publish && npm run clean",
     "lint": "eslint --ext .ts src/**",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

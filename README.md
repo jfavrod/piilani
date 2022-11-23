@@ -6,6 +6,9 @@ A framework for building cloud-based Node.js TypeScript back-end Web services.
 
 ⚠️ UNDER DEVELOPMENT: NOT PRODUCTION READY ⚠️
 
+If you have any questions, development ideas, or you'd like to contribute,
+please contact me or create an issue on Github.
+
 
 Getting Started
 ---------------

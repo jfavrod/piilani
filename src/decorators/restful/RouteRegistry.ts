@@ -60,36 +60,29 @@ export class RouteRegistry {
   }
 
   static findGet(path: string): Route | undefined {
-    const found = RouteRegistry.routes.find((rt) => {
+    return RouteRegistry.routes.find((rt) => {
       if (rt.method !== 'GET') return false;
 
-      let pathPattern = rt.path;
+      const url = new URL(`http://example.com${path}`);
+      const pathPattern = rt.path;
 
-      const queryParams = rt.parameters
-        .filter((param: Parameter) => param.mapping === fromQueryMetadataKey);
+      if (pathPattern.test(url.pathname)) {
+        const queryParams = rt.parameters
+          .filter((param: Parameter) => param.mapping === fromQueryMetadataKey);
 
-      if (queryParams.length) {
-        pathPattern = new RegExp(pathPattern.source.replace('$', '') + /\?/.source);
-      }
+        if (queryParams.length) {
+          for (const param of queryParams.filter((param) => param.required)) {
+            if (!Array.from(url.searchParams.keys()).includes(param.paramName)) {
+              return false;
+            }
+          }
 
-      for (let i = 0; i < queryParams.length; i++) {
-        // If there's more than one query param, add the amp.
-        if (i) pathPattern = new RegExp(pathPattern.source + '&');
-
-        pathPattern = new RegExp(
-          pathPattern.source + queryParams[i].paramName + /=\w+/.source
-        );
-
-        if (!queryParams[i].required) {
-          pathPattern = new RegExp(
-            `(${pathPattern.source})?`
-          );
+          return true;
+        } else {
+          return true;
         }
       }
-
-      return pathPattern.test(path);
     });
-    return found;
   }
 
   static findPost(path: string): Route | undefined {
